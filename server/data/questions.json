@@ -1,34 +1,140 @@
 {
   "physics": [
-    { "id": "p1", "question": "What is the SI unit of force?", "answer": "Newton (N)" },
-    { "id": "p2", "question": "Who formulated the three laws of motion?", "answer": "Isaac Newton" },
-    { "id": "p3", "question": "What quantity is measured in Ohms?", "answer": "Electrical resistance" },
-    { "id": "p4", "question": "What is the acceleration due to gravity on Earth (approx)?", "answer": "9.8 m/s^2" },
-    { "id": "p5", "question": "Which law explains the relation V = IR?", "answer": "Ohm's Law" },
-    { "id": "p6", "question": "What is the speed of light in vacuum (approx)?", "answer": "3 x 10^8 m/s" },
-    { "id": "p7", "question": "What type of lens is thicker at the center?", "answer": "Convex lens" },
-    { "id": "p8", "question": "What does a barometer measure?", "answer": "Atmospheric pressure" },
-    { "id": "p9", "question": "Which particle has a negative charge?", "answer": "Electron" },
-    { "id": "p10", "question": "What principle explains floating objects?", "answer": "Archimedes' principle" }
+    {
+      "question": "What is the approximate speed of light in a vacuum?",
+      "answer": "3 x 10^8 metres per second (300,000 km/s)",
+      "marks": 10,
+      "hint": "It takes about 8 minutes to travel from the Sun to Earth."
+    },
+    {
+      "question": "What fundamental force holds the nucleus of an atom together?",
+      "answer": "The strong nuclear force",
+      "marks": 10,
+      "hint": "It is the strongest of the four fundamental forces."
+    },
+    {
+      "question": "State Newton's Second Law of Motion.",
+      "answer": "Force = mass x acceleration (F = ma)",
+      "marks": 15,
+      "hint": "It relates net force, mass, and how an object accelerates."
+    },
+    {
+      "question": "What is the unit of electrical resistance?",
+      "answer": "Ohm (Omega)",
+      "marks": 5,
+      "hint": "Named after the German physicist Georg Simon ___."
+    },
+    {
+      "question": "What phenomenon causes light to bend when passing from one medium to another?",
+      "answer": "Refraction",
+      "marks": 10,
+      "hint": "This is why a straw appears bent in a glass of water."
+    },
+    {
+      "question": "What is the relationship described by E = mc^2?",
+      "answer": "Energy equals mass times the speed of light squared - mass and energy are equivalent and interconvertible.",
+      "marks": 20,
+      "hint": "Proposed by Einstein in his special theory of relativity."
+    },
+    {
+      "question": "What temperature is absolute zero in Celsius?",
+      "answer": "-273.15 C (or 0 Kelvin)",
+      "marks": 10,
+      "hint": "Below this, no lower temperature is theoretically possible."
+    },
+    {
+      "question": "What is the name of the quantum of light?",
+      "answer": "Photon",
+      "marks": 5,
+      "hint": "These are massless particles that travel at the speed of light."
+    }
   ],
   "sciFi": [
-    { "id": "s1", "question": "In Star Wars, what is Baby Yoda's actual species name in canon?", "answer": "Unknown (not revealed)" },
-    { "id": "s2", "question": "Who wrote the novel Dune?", "answer": "Frank Herbert" },
-    { "id": "s3", "question": "What is the name of Han Solo's ship?", "answer": "Millennium Falcon" },
-    { "id": "s4", "question": "In The Matrix, does Neo take the red pill or blue pill?", "answer": "Red pill" },
-    { "id": "s5", "question": "What is the home planet of Spock?", "answer": "Vulcan" },
-    { "id": "s6", "question": "Who is the creator of Isaac Asimov's Three Laws of Robotics?", "answer": "Isaac Asimov" },
-    { "id": "s7", "question": "In Doctor Who, what machine is bigger on the inside?", "answer": "TARDIS" },
-    { "id": "s8", "question": "What is the name of the AI in 2001: A Space Odyssey?", "answer": "HAL 9000" },
-    { "id": "s9", "question": "In Marvel, what metal is Captain America's shield made from?", "answer": "Vibranium" },
-    { "id": "s10", "question": "Which movie introduced the character Ripley?", "answer": "Alien (1979)" }
+    {
+      "question": "In Star Wars, what material are lightsaber blades made of?",
+      "answer": "Plasma (contained within a magnetic field created by a kyber crystal)",
+      "marks": 10,
+      "hint": "The colour depends on the crystal's alignment."
+    },
+    {
+      "question": "Which fictional spaceship is capable of the Kessel Run in less than 12 parsecs?",
+      "answer": "The Millennium Falcon",
+      "marks": 5,
+      "hint": "Owned by a certain smuggler-turned-hero."
+    },
+    {
+      "question": "In the Dune universe, what substance grants limited prescience and enables space travel?",
+      "answer": "Spice (Melange)",
+      "marks": 10,
+      "hint": "Only found on the desert planet Arrakis."
+    },
+    {
+      "question": "What was the name of the AI spaceship computer in 2001: A Space Odyssey?",
+      "answer": "HAL 9000",
+      "marks": 5,
+      "hint": "Famous for saying: 'I'm sorry Dave, I can't do that.'"
+    },
+    {
+      "question": "In The Hitchhiker's Guide to the Galaxy, what is the answer to 'life, the universe, and everything'?",
+      "answer": "42",
+      "marks": 5,
+      "hint": "The question itself remained unknown for millions of years."
+    },
+    {
+      "question": "What technology allows ships to travel faster than light in Star Trek?",
+      "answer": "Warp drive (powered by matter-antimatter annihilation)",
+      "marks": 10,
+      "hint": "The speed is measured in warp factors."
+    },
+    {
+      "question": "In Isaac Asimov's fiction, what is the First Law of Robotics?",
+      "answer": "A robot may not injure a human being or, through inaction, allow a human being to come to harm.",
+      "marks": 15,
+      "hint": "There are three laws; this one takes highest priority."
+    },
+    {
+      "question": "What is the name of the neural lace/brain-computer interface in Elon Musk's venture inspired partly by sci-fi?",
+      "answer": "Neuralink (inspired by concepts like neural lace from The Culture series by Iain M. Banks)",
+      "marks": 15,
+      "hint": "It aims to merge human cognition with artificial intelligence."
+    }
   ],
   "puzzles": [
-    { "id": "z1", "question": "What comes once in a minute, twice in a moment, but never in a thousand years?", "answer": "The letter M" },
-    { "id": "z2", "question": "I speak without a mouth and hear without ears. What am I?", "answer": "An echo" },
-    { "id": "z3", "question": "What has keys but cannot open locks?", "answer": "A piano" },
-    { "id": "z4", "question": "What gets wetter the more it dries?", "answer": "A towel" },
-    { "id": "z5", "question": "What has to be broken before you can use it?", "answer": "An egg" },
-    { "id": "z6", "question": "What can travel around the world while staying in a corner?", "answer": "A stamp" }
+    {
+      "question": "I speak without a mouth and hear without ears. I have no body, but I come alive with the wind. What am I?",
+      "answer": "An echo",
+      "marks": 10,
+      "hint": "Sound travels, bounces, and returns to you."
+    },
+    {
+      "question": "A man walks into a restaurant and orders albatross soup. After one sip, he goes home and kills himself. Why?",
+      "answer": "He was stranded on a deserted island after a shipwreck. A fellow survivor told him he was eating 'albatross soup', but it was actually his wife. He realised the truth when he tasted real albatross soup at the restaurant.",
+      "marks": 20,
+      "hint": "This is a lateral thinking puzzle - think about what he might have eaten before."
+    },
+    {
+      "question": "What has keys but no locks, space but no room, and you can enter but can't go inside?",
+      "answer": "A keyboard",
+      "marks": 10,
+      "hint": "You use it every day to type."
+    },
+    {
+      "question": "If you have a 3-litre jug and a 5-litre jug, how do you measure exactly 4 litres of water?",
+      "answer": "Fill the 5L jug. Pour into 3L until full (leaves 2L in 5L). Empty the 3L. Pour 2L from 5L into 3L. Fill 5L again. Pour into 3L until full (only 1L needed). 5L now has exactly 4L.",
+      "marks": 20,
+      "hint": "You'll need to fill and empty the jugs multiple times."
+    },
+    {
+      "question": "You are in a room with three light switches. One controls a bulb in the next room (the door is closed). How do you determine which switch controls the bulb, with only one trip into the next room?",
+      "answer": "Turn switch 1 on for several minutes, then off. Turn switch 2 on. Enter the room - if the bulb is on it's switch 2; if it's off but warm it's switch 1; if it's off and cold it's switch 3.",
+      "marks": 20,
+      "hint": "A light bulb generates heat when it's been on."
+    },
+    {
+      "question": "A boat has a ladder hanging off it. The ladder has 10 rungs, each 30cm apart. The bottom rung is touching the water. The tide rises 90cm. How many rungs are under water?",
+      "answer": "Still just the bottom rung (or zero above water). The boat rises with the tide, so the ladder position relative to the water stays the same.",
+      "marks": 15,
+      "hint": "Think about what happens to a boat when the tide rises."
+    }
   ]
 }

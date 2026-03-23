@@ -1,17 +1,19 @@
-# Q-Mania Club Quiz Dashboard
+# Q-MANIA - Quiz Dashboard v2
 
-Live-event quiz dashboard built for manual host control.
+A live-event quiz dashboard with real-time scoring, host controls, and an Electric Noir UI.
 
-## Tech
+## Tech Stack
 
-- Frontend: React + Tailwind
-- Backend: Node.js + Express
-- Realtime: Socket.IO
-- Data: JSON question bank
+| Layer     | Tech                             |
+|-----------|----------------------------------|
+| Frontend  | React 18 + Tailwind CSS 3 + Vite |
+| Backend   | Node.js + Express 4             |
+| Realtime  | Socket.IO 4                     |
+| Data      | JSON question bank              |
 
-## Run
+## Quick Start
 
-### 1) Backend
+### 1 - Server
 
 ```bash
 cd server
@@ -21,7 +23,7 @@ npm run dev
 
 Runs on `http://localhost:4000`.
 
-### 2) Frontend
+### 2 - Client
 
 ```bash
 cd client
@@ -29,35 +31,30 @@ npm install
 npm run dev
 ```
 
-Open the Vite URL (typically `http://localhost:5173`).
+Open `http://localhost:5173`.
 
-## Sample Dataset
+## Question Bank
 
-Question bank is in:
+Edit `server/data/questions.json`. Structure:
 
-- `server/data/questions.json`
+```json
+{
+  "sectionName": [
+    {
+      "question": "Your question here?",
+      "answer": "The full answer",
+      "marks": 10,
+      "hint": "Optional hint shown to host"
+    }
+  ]
+}
+```
 
-Sections included:
+## Scoring System
 
-- `physics`
-- `sciFi`
-- `puzzles`
+| Attempt | Correct     | Wrong         |
+|---------|-------------|---------------|
+| 1st     | +full marks | -1/4 marks    |
+| 2nd     | +1/2 marks  | 0 (no penalty)|
 
-## Host Workflow
-
-1. Setup teams on first screen.
-2. Select section from left panel.
-3. Click `Next Random Question`.
-4. Choose active team and click `Start Attempt 1` or `Start Attempt 2`.
-5. Score using `Correct`/`Wrong` (dynamic marks) or manual mark buttons.
-6. Use `Undo Last Action` whenever needed.
-7. End/Skip/Reset question with control buttons.
-8. Watch live leaderboard on right panel.
-
-## Reliability Features
-
-- No repeated questions in a section
-- Manual controls for every key action
-- Undo stack for recent actions
-- Prevents double scoring same question+attempt pair
-- Final warning list for non-attempt teams in Physics/Sci-Fi (no auto penalty)
+Manual adjustments are also available at any time.
