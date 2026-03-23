@@ -1,0 +1,34 @@
+{
+  "physics": [
+    { "id": "p1", "question": "What is the SI unit of force?", "answer": "Newton (N)" },
+    { "id": "p2", "question": "Who formulated the three laws of motion?", "answer": "Isaac Newton" },
+    { "id": "p3", "question": "What quantity is measured in Ohms?", "answer": "Electrical resistance" },
+    { "id": "p4", "question": "What is the acceleration due to gravity on Earth (approx)?", "answer": "9.8 m/s^2" },
+    { "id": "p5", "question": "Which law explains the relation V = IR?", "answer": "Ohm's Law" },
+    { "id": "p6", "question": "What is the speed of light in vacuum (approx)?", "answer": "3 x 10^8 m/s" },
+    { "id": "p7", "question": "What type of lens is thicker at the center?", "answer": "Convex lens" },
+    { "id": "p8", "question": "What does a barometer measure?", "answer": "Atmospheric pressure" },
+    { "id": "p9", "question": "Which particle has a negative charge?", "answer": "Electron" },
+    { "id": "p10", "question": "What principle explains floating objects?", "answer": "Archimedes' principle" }
+  ],
+  "sciFi": [
+    { "id": "s1", "question": "In Star Wars, what is Baby Yoda's actual species name in canon?", "answer": "Unknown (not revealed)" },
+    { "id": "s2", "question": "Who wrote the novel Dune?", "answer": "Frank Herbert" },
+    { "id": "s3", "question": "What is the name of Han Solo's ship?", "answer": "Millennium Falcon" },
+    { "id": "s4", "question": "In The Matrix, does Neo take the red pill or blue pill?", "answer": "Red pill" },
+    { "id": "s5", "question": "What is the home planet of Spock?", "answer": "Vulcan" },
+    { "id": "s6", "question": "Who is the creator of Isaac Asimov's Three Laws of Robotics?", "answer": "Isaac Asimov" },
+    { "id": "s7", "question": "In Doctor Who, what machine is bigger on the inside?", "answer": "TARDIS" },
+    { "id": "s8", "question": "What is the name of the AI in 2001: A Space Odyssey?", "answer": "HAL 9000" },
+    { "id": "s9", "question": "In Marvel, what metal is Captain America's shield made from?", "answer": "Vibranium" },
+    { "id": "s10", "question": "Which movie introduced the character Ripley?", "answer": "Alien (1979)" }
+  ],
+  "puzzles": [
+    { "id": "z1", "question": "What comes once in a minute, twice in a moment, but never in a thousand years?", "answer": "The letter M" },
+    { "id": "z2", "question": "I speak without a mouth and hear without ears. What am I?", "answer": "An echo" },
+    { "id": "z3", "question": "What has keys but cannot open locks?", "answer": "A piano" },
+    { "id": "z4", "question": "What gets wetter the more it dries?", "answer": "A towel" },
+    { "id": "z5", "question": "What has to be broken before you can use it?", "answer": "An egg" },
+    { "id": "z6", "question": "What can travel around the world while staying in a corner?", "answer": "A stamp" }
+  ]
+}
