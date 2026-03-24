@@ -1,10 +1,10 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { io } from 'socket.io-client'
 
-// ─── Constants ───────────────────────────────────────────────────────────────
+// ─── Constants ────────────────────────────────────────────────────────────────
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL || 'http://localhost:4000'
-const MAX_TEAMS  = 8
+const MAX_TEAMS  = 8   // hard cap, matches server/gameState.js
 
 const SECTION_META = {
   physics: { icon: '⚛',  label: 'Physics', color: '#00d4ff', scoreLabel: '+40 / −10' },
@@ -21,6 +21,7 @@ const TEAM_COLORS = [
   '#ffd700', '#a855f7', '#ec4899', '#10b981',
 ]
 
+// Stable uid generator for team rows in setup screen
 let _uid = 0
 const makeTeam = (name = '') => ({ uid: ++_uid, name })
 
@@ -33,7 +34,10 @@ export default function App() {
   const socketRef                 = useRef(null)
 
   useEffect(() => {
-    const socket = io(SERVER_URL, { reconnectionAttempts: Infinity })
+    const socket = io(SERVER_URL, {
+      reconnectionAttempts: Infinity,
+      reconnectionDelay:    1000,
+    })
     socketRef.current = socket
     socket.on('connect',    ()      => setConnected(true))
     socket.on('disconnect', ()      => setConnected(false))
@@ -49,6 +53,7 @@ export default function App() {
     socketRef.current?.emit(event, data)
   }, [])
 
+  // ── Loading / connecting screen ──────────────────────────────────────────
   if (!gameState) {
     return (
       <div className="min-h-screen bg-void flex flex-col items-center justify-center gap-4">
@@ -71,18 +76,21 @@ export default function App() {
       <div className="grid-overlay" />
       <div className="scanlines" />
 
+      {/* Connection lost banner */}
       {!connected && (
-        <div className="fixed top-0 left-0 right-0 z-50 bg-yellow-900/80 border-b border-yellow-500/40 text-yellow-300 text-center py-2 text-sm font-mono tracking-widest">
+        <div className="fixed top-0 left-0 right-0 z-50 bg-yellow-900/90 border-b border-yellow-500/50 text-yellow-300 text-center py-2 text-sm font-mono tracking-widest">
           ⚡ CONNECTION LOST — RECONNECTING...
         </div>
       )}
 
+      {/* Error toast */}
       {error && (
-        <div className="fixed top-4 right-4 z-50 card border border-neon-red/40 bg-red-950/90 text-neon-red px-5 py-4 text-base font-mono max-w-sm animate-slide-in">
+        <div className="fixed top-4 right-4 z-50 card border border-neon-red/50 bg-red-950/95 text-neon-red px-5 py-4 text-base font-mono max-w-sm animate-slide-in shadow-glow-red">
           ⚠ {error}
         </div>
       )}
 
+      {/* Phase routing */}
       {gameState.phase === 'setup' && (
         <TeamSetup onStart={(teams) => emit('setup:teams', { teams })} />
       )}
@@ -90,21 +98,18 @@ export default function App() {
         <Dashboard gameState={gameState} emit={emit} />
       )}
       {gameState.phase === 'end' && (
-        <EndGameScreen
-          gameState={gameState}
-          onReset={() => emit('game:reset')}
-        />
+        <EndGameScreen gameState={gameState} onReset={() => emit('game:reset')} />
       )}
     </div>
   )
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// TEAM SETUP
+// TEAM SETUP SCREEN
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function TeamSetup({ onStart }) {
-  const [teams, setTeams] = useState([makeTeam(), makeTeam(), makeTeam(), makeTeam()])
+  const [teams, setTeams] = useState(() => [makeTeam(), makeTeam(), makeTeam(), makeTeam()])
   const [error, setError] = useState('')
   const inputRefs         = useRef([])
 
@@ -127,8 +132,8 @@ function TeamSetup({ onStart }) {
 
   const handleStart = () => {
     const names = teams.map(t => t.name.trim()).filter(Boolean)
-    if (names.length < 2)                    { setError('Add at least 2 team names'); return }
-    if (new Set(names).size < names.length)  { setError('Team names must be unique'); return }
+    if (names.length < 2)                   { setError('Add at least 2 team names'); return }
+    if (new Set(names).size < names.length) { setError('Team names must be unique'); return }
     setError('')
     onStart(names)
   }
@@ -143,25 +148,26 @@ function TeamSetup({ onStart }) {
 
   return (
     <div className="min-h-screen flex items-center justify-center p-6 relative overflow-hidden">
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full opacity-5"
+      {/* Background glows */}
+      <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full opacity-5 pointer-events-none"
            style={{ background: 'radial-gradient(circle, #00d4ff, transparent)', filter: 'blur(80px)' }} />
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full opacity-5"
+      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full opacity-5 pointer-events-none"
            style={{ background: 'radial-gradient(circle, #a855f7, transparent)', filter: 'blur(80px)' }} />
 
       <div className="relative z-10 w-full max-w-lg">
 
         {/* Logo */}
-        <div className="text-center mb-12">
-          <h1 className="font-display text-7xl tracking-widest text-neon-cyan glow-cyan mb-2">
+        <div className="text-center mb-10">
+          <h1 className="font-display text-6xl sm:text-7xl tracking-widest text-neon-cyan glow-cyan mb-2">
             Q-MANIA
           </h1>
           <div className="h-px bg-gradient-to-r from-transparent via-neon-cyan to-transparent opacity-40 mb-4" />
-          <p className="font-mono text-ghost text-xs tracking-[0.4em] uppercase">
+          <p className="font-mono text-ghost text-xs tracking-[0.35em] uppercase">
             Live Quiz Dashboard · Host Console
           </p>
         </div>
 
-        {/* Scoring reference */}
+        {/* Section scoring reference */}
         <div className="grid grid-cols-3 gap-3 mb-6">
           {Object.entries(SECTION_META).map(([key, meta]) => (
             <div key={key} className="card-sm p-3 text-center">
@@ -174,11 +180,12 @@ function TeamSetup({ onStart }) {
           ))}
         </div>
 
-        {/* Team setup card */}
-        <div className="card p-8">
-          <div className="flex items-center gap-3 mb-7">
+        {/* Team config card */}
+        <div className="card p-7">
+          <div className="flex items-center gap-3 mb-6">
             <div className="w-1 h-6 bg-neon-cyan rounded-full" style={{ boxShadow: '0 0 8px #00d4ff' }} />
             <h2 className="font-display text-sm text-frost tracking-widest">CONFIGURE TEAMS</h2>
+            <span className="font-mono text-ghost/50 text-xs ml-auto">max {MAX_TEAMS}</span>
           </div>
 
           <div className="space-y-3 mb-5">
@@ -200,22 +207,29 @@ function TeamSetup({ onStart }) {
                 {teams.length > 2 && (
                   <button
                     onClick={() => removeTeam(team.uid)}
-                    className="text-ghost hover:text-neon-red transition-colors w-6 text-base flex-shrink-0"
-                    aria-label="Remove team"
+                    className="text-ghost hover:text-neon-red transition-colors w-7 h-7 flex items-center justify-center text-base flex-shrink-0 rounded hover:bg-red-500/10"
+                    aria-label={`Remove team ${i + 1}`}
                   >✕</button>
                 )}
               </div>
             ))}
           </div>
 
+          {/* Add team / limit message */}
           {teams.length < MAX_TEAMS ? (
-            <button onClick={addTeam} className="btn btn-ghost mb-5 text-sm" style={{ width: 'auto' }}>
+            <button
+              onClick={addTeam}
+              className="btn btn-ghost mb-5 text-sm"
+              style={{ width: 'auto' }}
+            >
               + ADD TEAM ({teams.length}/{MAX_TEAMS})
             </button>
           ) : (
-            <p className="font-mono text-ghost/50 text-sm mb-5 text-center">
-              Maximum {MAX_TEAMS} teams reached
-            </p>
+            <div className="mb-5 text-center">
+              <span className="font-mono text-neon-orange/70 text-xs tracking-widest">
+                ◈ MAXIMUM {MAX_TEAMS} TEAMS REACHED
+              </span>
+            </div>
           )}
 
           {error && (
@@ -228,12 +242,12 @@ function TeamSetup({ onStart }) {
             ▶ LAUNCH GAME
           </button>
 
-          <p className="text-ghost text-sm font-mono text-center mt-4">
+          <p className="text-ghost text-sm font-mono text-center mt-4 opacity-60">
             {namedCount} / {teams.length} teams named
           </p>
         </div>
 
-        <p className="text-center font-mono text-ghost/40 text-xs mt-6">
+        <p className="text-center font-mono text-ghost/30 text-xs mt-5">
           Q-Mania Club · Live Event Quiz System
         </p>
       </div>
@@ -242,13 +256,23 @@ function TeamSetup({ onStart }) {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// DASHBOARD (GAME PHASE)
+// DASHBOARD — main game screen
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function Dashboard({ gameState, emit }) {
-  const [mobileTab,   setMobileTab]   = useState('question')
-  const [showAnswer,  setShowAnswer]  = useState(false)
-  const prevQuestionRef               = useRef(null)
+  const [mobileTab,  setMobileTab]  = useState('question')
+  const [showAnswer, setShowAnswer] = useState(false)
+  const [isDesktop,  setIsDesktop]  = useState(() => typeof window !== 'undefined' && window.innerWidth >= 768)
+  const prevQuestionRef             = useRef(null)
+
+  // Track screen width so the 3-panel layout is driven by JS, not Tailwind class ordering.
+  // This was the root bug: md:w-68 / lg:w-76 don't exist in Tailwind's default scale,
+  // causing the leaderboard to have no width constraint and fill the whole viewport.
+  useEffect(() => {
+    const onResize = () => setIsDesktop(window.innerWidth >= 768)
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  }, [])
 
   const {
     teams, leaderboard, sections, sectionMeta, sectionScores,
@@ -256,6 +280,7 @@ function Dashboard({ gameState, emit }) {
     activeTeamId, activeAttempt, canUndo, remainingInSection,
   } = gameState
 
+  // Hide answer whenever a new question arrives
   useEffect(() => {
     const qText = currentQuestion?.question ?? null
     if (qText !== prevQuestionRef.current) {
@@ -264,18 +289,21 @@ function Dashboard({ gameState, emit }) {
     }
   }, [currentQuestion])
 
+  // Auto-switch to question tab on new question
   useEffect(() => {
-    if (currentQuestion && questionState === 'active') setMobileTab('question')
-  }, [currentQuestion?.question])
+    if (currentQuestion && questionState === 'active') {
+      setMobileTab('question')
+    }
+  }, [currentQuestion?.question, questionState])
 
   const handleEndGame = () => {
-    if (window.confirm('End the game and show final scores? This cannot be undone.')) {
+    if (window.confirm('End the game and show final scores?')) {
       emit('game:end')
     }
   }
 
   const handleReset = () => {
-    if (window.confirm('RESET the entire game? All scores will be permanently lost.')) {
+    if (window.confirm('RESET the entire game? ALL scores will be lost permanently.')) {
       emit('game:reset')
     }
   }
@@ -283,48 +311,72 @@ function Dashboard({ gameState, emit }) {
   return (
     <div className="min-h-screen flex flex-col bg-void">
 
-      {/* ── Header ── */}
-      <header className="header-border px-4 md:px-6 py-3 flex items-center justify-between flex-shrink-0 relative z-10 bg-void/90 backdrop-blur-sm">
-        <div className="flex items-center gap-3 md:gap-4">
-          <h1 className="font-display text-2xl md:text-3xl text-neon-cyan glow-cyan tracking-widest">
-            Q-MANIA
-          </h1>
-          <div className="hidden sm:flex items-center gap-2">
-            <div className="h-5 w-px bg-ghost/30" />
-            <span className="font-mono text-ghost text-xs tracking-widest">HOST CONSOLE</span>
-          </div>
-          {currentSection && (
-            <div className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded border border-white/10 bg-white/5">
-              <span className="text-base">{getSectionMeta(currentSection).icon}</span>
-              <span className="font-mono text-sm tracking-widest" style={{ color: getSectionMeta(currentSection).color }}>
-                {getSectionMeta(currentSection).label.toUpperCase()}
-              </span>
-              <span className="font-mono text-xs text-ghost">· {remainingInSection} left</span>
-            </div>
-          )}
-        </div>
+      {/* ── HEADER ── */}
+      <header className="header-border flex-shrink-0 relative z-10 bg-void/95 backdrop-blur-sm">
+        <div className="px-3 md:px-5 py-2.5 flex items-center gap-2 min-w-0">
 
-        <div className="flex items-center gap-2">
-          <button
-            onClick={() => emit('action:undo')}
-            disabled={!canUndo}
-            className="btn btn-ghost btn-sm"
-            style={{ width: 'auto' }}
-            title={canUndo ? 'Undo last action' : 'No action to undo yet'}
-          >
-            ↩ UNDO
-          </button>
-          <button onClick={handleEndGame} className="btn btn-sm" style={{ width: 'auto', background: 'rgba(255,215,0,0.1)', borderColor: 'rgba(255,215,0,0.4)', color: '#ffd700' }}>
-            🏁 END GAME
-          </button>
-          <button onClick={handleReset} className="btn btn-danger btn-sm" style={{ width: 'auto' }}>
-            ⊗ RESET
-          </button>
+          {/* Left: logo + section badge */}
+          <div className="flex items-center gap-2 min-w-0 flex-1">
+            <h1 className="font-display text-lg md:text-2xl text-neon-cyan glow-cyan tracking-widest flex-shrink-0">
+              Q-MANIA
+            </h1>
+            <div className="hidden sm:flex items-center gap-1.5 flex-shrink-0">
+              <div className="h-4 w-px bg-ghost/30" />
+              <span className="font-mono text-ghost text-xs tracking-widest">HOST</span>
+            </div>
+            {currentSection && (
+              <div className="hidden md:flex items-center gap-1.5 px-2 py-1 rounded border border-white/10 bg-white/5 flex-shrink-0">
+                <span className="text-sm">{getSectionMeta(currentSection).icon}</span>
+                <span className="font-mono text-xs tracking-widest" style={{ color: getSectionMeta(currentSection).color }}>
+                  {getSectionMeta(currentSection).label}
+                </span>
+                <span className="font-mono text-xs text-ghost">· {remainingInSection}Q left</span>
+              </div>
+            )}
+          </div>
+
+          {/* Right: action buttons — ALWAYS visible regardless of team count */}
+          <div className="flex items-center gap-1.5 flex-shrink-0">
+            {/* UNDO — always rendered, disabled when nothing to undo */}
+            <button
+              onClick={() => emit('action:undo')}
+              disabled={!canUndo}
+              className="btn btn-ghost btn-sm flex-shrink-0"
+              style={{ width: 'auto', minWidth: '70px' }}
+              title={canUndo ? 'Undo last scoring action' : 'Nothing to undo yet'}
+            >
+              ↩ UNDO
+            </button>
+
+            {/* END GAME */}
+            <button
+              onClick={handleEndGame}
+              className="btn btn-sm flex-shrink-0"
+              style={{
+                width: 'auto',
+                minWidth: '80px',
+                background: 'rgba(255,215,0,0.1)',
+                borderColor: 'rgba(255,215,0,0.4)',
+                color: '#ffd700',
+              }}
+            >
+              🏁 END
+            </button>
+
+            {/* RESET */}
+            <button
+              onClick={handleReset}
+              className="btn btn-danger btn-sm flex-shrink-0"
+              style={{ width: 'auto', minWidth: '70px' }}
+            >
+              ⊗ RESET
+            </button>
+          </div>
         </div>
       </header>
 
-      {/* ── Mobile tabs ── */}
-      <div className="md:hidden header-border panel-border-b flex flex-shrink-0 bg-void/90 backdrop-blur-sm">
+      {/* ── MOBILE TAB BAR ── */}
+      <div className="md:hidden header-border flex flex-shrink-0 bg-void/95 backdrop-blur-sm">
         {[
           { key: 'sections',    label: 'Sections', icon: '⚡' },
           { key: 'question',    label: 'Question',  icon: '❓' },
@@ -333,7 +385,7 @@ function Dashboard({ gameState, emit }) {
           <button
             key={tab.key}
             onClick={() => setMobileTab(tab.key)}
-            className={`flex-1 py-3 font-mono text-sm tracking-widest uppercase transition-all ${
+            className={`flex-1 py-2.5 font-mono text-xs tracking-widest uppercase transition-all ${
               mobileTab === tab.key
                 ? 'text-neon-cyan border-b-2 border-neon-cyan -mb-px'
                 : 'text-ghost'
@@ -344,11 +396,24 @@ function Dashboard({ gameState, emit }) {
         ))}
       </div>
 
-      {/* ── Main 3-panel layout ── */}
+      {/* ── THREE-PANEL LAYOUT ── */}
+      {/*
+        Layout fix: Tailwind's md:w-68 / lg:w-76 don't exist in the default scale
+        and md:flex vs hidden ordering can be unreliable depending on build order.
+        Solution: drive visibility entirely from JS (isDesktop hook) using inline styles.
+        This is 100% reliable regardless of Tailwind purging or class ordering.
+      */}
       <div className="flex flex-1 overflow-hidden relative z-10">
 
-        {/* LEFT — Sections */}
-        <aside className={`${mobileTab === 'sections' ? 'flex' : 'hidden'} md:flex flex-col w-full md:w-64 lg:w-72 panel-border-r flex-shrink-0 overflow-y-auto`}>
+        {/* LEFT — Section selector */}
+        <aside
+          className="flex-col panel-border-r flex-shrink-0 overflow-y-auto"
+          style={{
+            display:  isDesktop || mobileTab === 'sections' ? 'flex' : 'none',
+            width:    isDesktop ? '240px' : '100%',
+            minWidth: isDesktop ? '240px' : undefined,
+          }}
+        >
           <SectionsPanel
             sections={sections}
             sectionMeta={sectionMeta}
@@ -361,8 +426,15 @@ function Dashboard({ gameState, emit }) {
           />
         </aside>
 
-        {/* CENTER — Question + Controls */}
-        <main className={`${mobileTab === 'question' ? 'flex' : 'hidden'} md:flex flex-col flex-1 overflow-y-auto`}>
+        {/* CENTER — Question + Host Controls */}
+        <main
+          className="flex-col overflow-y-auto"
+          style={{
+            display:  isDesktop || mobileTab === 'question' ? 'flex' : 'none',
+            flex:     1,
+            minWidth: 0,
+          }}
+        >
           <QuestionPanel
             currentQuestion={currentQuestion}
             questionState={questionState}
@@ -381,19 +453,26 @@ function Dashboard({ gameState, emit }) {
             currentQuestion={currentQuestion}
             currentSection={currentSection}
             sectionScores={sectionScores}
+            canUndo={canUndo}
             onStartAttempt={(teamId, attempt) => emit('attempt:start', { teamId, attempt })}
             onMarkScore={(result) => emit('score:mark', { result })}
             onManualScore={(teamId, points) => emit('score:manual', { teamId, points })}
             onEndQuestion={() => emit('question:end')}
             onSkipQuestion={() => emit('question:skip')}
             onNextQuestion={() => emit('question:next')}
-            canUndo={canUndo}
             onUndo={() => emit('action:undo')}
           />
         </main>
 
-        {/* RIGHT — Leaderboard */}
-        <aside className={`${mobileTab === 'leaderboard' ? 'flex' : 'hidden'} md:flex flex-col w-full md:w-72 lg:w-80 panel-border-l flex-shrink-0 overflow-y-auto`}>
+        {/* RIGHT — Live Leaderboard */}
+        <aside
+          className="flex-col panel-border-l flex-shrink-0 overflow-y-auto"
+          style={{
+            display:  isDesktop || mobileTab === 'leaderboard' ? 'flex' : 'none',
+            width:    isDesktop ? '288px' : '100%',
+            minWidth: isDesktop ? '288px' : undefined,
+          }}
+        >
           <LeaderboardPanel teams={leaderboard} activeTeamId={activeTeamId} />
         </aside>
       </div>
@@ -402,27 +481,33 @@ function Dashboard({ gameState, emit }) {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SECTIONS PANEL (LEFT)
+// SECTIONS PANEL — left column
 // ═══════════════════════════════════════════════════════════════════════════════
 
-function SectionsPanel({ sections, sectionMeta, sectionScores, currentSection, remainingInSection, questionState, onSelectSection, onNextQuestion }) {
+function SectionsPanel({
+  sections, sectionMeta, sectionScores,
+  currentSection, remainingInSection, questionState,
+  onSelectSection, onNextQuestion,
+}) {
   const isScoring = questionState === 'scoring'
 
   return (
-    <div className="p-4 flex flex-col gap-4 h-full">
+    <div className="p-4 flex flex-col gap-3 h-full">
 
-      <div className="flex items-center gap-2 mb-1">
+      {/* Header */}
+      <div className="flex items-center gap-2">
         <div className="w-1 h-4 bg-neon-cyan rounded-full" style={{ boxShadow: '0 0 6px #00d4ff' }} />
         <h3 className="font-display text-xs text-ghost tracking-widest">SECTIONS</h3>
       </div>
 
+      {/* Section buttons */}
       <div className="space-y-2">
         {sections.map(section => {
           const meta       = getSectionMeta(section)
-          const meta2      = sectionMeta?.[section]
-          const maxAllowed = meta2?.maxAllowed ?? '?'
-          const asked      = meta2?.asked      ?? 0
-          const remaining  = meta2?.remaining  ?? '?'
+          const m          = sectionMeta?.[section]
+          const maxAllowed = m?.maxAllowed ?? '?'
+          const asked      = m?.asked      ?? 0
+          const remaining  = m?.remaining  ?? '?'
           const exhausted  = remaining === 0
           const isActive   = currentSection === section
           const scores     = sectionScores?.[section]
@@ -434,16 +519,16 @@ function SectionsPanel({ sections, sectionMeta, sectionScores, currentSection, r
               onClick={() => onSelectSection(section)}
               className={`section-btn ${isActive ? 'active' : ''} ${exhausted && !isActive ? 'opacity-40' : ''}`}
             >
-              <span className="text-xl">{meta.icon}</span>
-              <div className="flex-1 text-left">
+              <span className="text-xl flex-shrink-0">{meta.icon}</span>
+              <div className="flex-1 text-left min-w-0">
                 <div className="text-sm tracking-widest">{meta.label.toUpperCase()}</div>
                 {scores && (
-                  <div className="font-mono text-xs mt-0.5" style={{ color: `${meta.color}80` }}>
+                  <div className="font-mono text-xs mt-0.5" style={{ color: `${meta.color}90` }}>
                     +{scores.correct} / {scores.wrong}
                   </div>
                 )}
               </div>
-              <div className="text-right">
+              <div className="text-right flex-shrink-0">
                 <div className={`font-display text-sm ${isActive ? 'text-neon-cyan' : 'text-ghost/60'}`}>
                   {asked}/{maxAllowed}
                 </div>
@@ -454,44 +539,47 @@ function SectionsPanel({ sections, sectionMeta, sectionScores, currentSection, r
         })}
       </div>
 
-      {/* Q count formula info */}
-      <div className="card-sm p-3 text-center">
-        <div className="font-mono text-ghost/50 text-xs leading-relaxed">
+      {/* Formula note */}
+      <div className="card-sm p-2.5 text-center">
+        <div className="font-mono text-ghost/40 text-xs leading-relaxed">
           Phy/SciFi: ceil(1.7 × teams)<br />
           Puzzles: ceil(0.6 × teams)
         </div>
       </div>
 
-      <div className="mt-auto space-y-3">
+      {/* Bottom: remaining counter + NEXT QUESTION */}
+      <div className="mt-auto space-y-2">
         {currentSection ? (
           <>
-            <div className="card-sm p-4 text-center">
+            <div className="card-sm p-3 text-center">
               <div className="font-mono text-xs text-ghost mb-1">REMAINING</div>
               <div className="font-display text-4xl" style={{ color: getSectionMeta(currentSection).color }}>
                 {remainingInSection}
               </div>
-              <div className="font-mono text-xs text-ghost">questions left</div>
+              <div className="font-mono text-xs text-ghost/60">questions left</div>
             </div>
+
             <button
               onClick={onNextQuestion}
               disabled={isScoring || remainingInSection === 0}
-              className="btn btn-primary py-4 text-base"
+              className="btn btn-primary py-3.5 text-sm"
             >
               ▶ NEXT QUESTION
             </button>
+
             {isScoring && (
-              <p className="font-mono text-ghost/50 text-xs text-center">
+              <p className="font-mono text-ghost/40 text-xs text-center">
                 Finish current attempt first
               </p>
             )}
             {remainingInSection === 0 && !isScoring && (
-              <p className="font-mono text-neon-orange/70 text-xs text-center">
-                Section complete
+              <p className="font-mono text-neon-orange/60 text-xs text-center">
+                ✓ Section complete
               </p>
             )}
           </>
         ) : (
-          <p className="text-ghost text-sm font-mono text-center leading-relaxed">
+          <p className="text-ghost text-sm font-mono text-center leading-relaxed py-4">
             ↑ Select a section<br />to begin
           </p>
         )}
@@ -501,62 +589,74 @@ function SectionsPanel({ sections, sectionMeta, sectionScores, currentSection, r
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// QUESTION PANEL (CENTER TOP)
+// QUESTION PANEL — center top
 // ═══════════════════════════════════════════════════════════════════════════════
 
-function QuestionPanel({ currentQuestion, questionState, currentSection, showAnswer, onToggleAnswer, onSkip, onEnd, onReset }) {
+function QuestionPanel({
+  currentQuestion, questionState, currentSection,
+  showAnswer, onToggleAnswer,
+  onSkip, onEnd, onReset,
+}) {
+  const isDone    = questionState === 'done'
+  const isScoring = questionState === 'scoring'
+  const isIdle    = questionState === 'idle'
+
+  // No question yet
   if (!currentQuestion) {
     return (
-      <div className="flex-1 flex flex-col items-center justify-center p-8 text-center min-h-64">
-        <div className="text-8xl mb-6 opacity-10 select-none">❓</div>
-        <h3 className="font-display text-base text-ghost tracking-widest mb-3">
+      <div className="flex-1 flex flex-col items-center justify-center p-8 text-center" style={{ minHeight: '260px' }}>
+        <div className="text-7xl mb-5 opacity-10 select-none">❓</div>
+        <h3 className="font-display text-sm text-ghost tracking-widest mb-2">
           {currentSection ? 'READY TO DRAW' : 'SELECT A SECTION'}
         </h3>
-        <p className="font-mono text-ghost/60 text-sm">
+        <p className="font-mono text-ghost/50 text-sm">
           {currentSection
-            ? 'Click NEXT QUESTION in the left panel'
+            ? 'Click NEXT QUESTION in the left panel to draw a question'
             : 'Choose a section from the left panel to begin'}
         </p>
       </div>
     )
   }
 
-  const meta      = getSectionMeta(currentSection)
-  const isDone    = questionState === 'done'
-  const isScoring = questionState === 'scoring'
+  const meta = getSectionMeta(currentSection)
 
   return (
-    <div className="p-4 md:p-6">
+    <div className="p-4 md:p-5">
 
       {/* Question card */}
-      <div className={`card p-5 md:p-7 mb-4 question-enter ${isDone ? 'opacity-60' : ''}`}>
-        <div className="flex items-center justify-between mb-5">
-          <div className="flex items-center gap-3">
+      <div className={`card p-5 md:p-6 mb-4 question-enter ${isDone ? 'opacity-55' : ''}`}>
+
+        {/* Card header row */}
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-2.5">
             <span className="text-2xl">{meta.icon}</span>
             <div>
               <span className="font-mono text-sm tracking-widest" style={{ color: meta.color }}>
                 {meta.label.toUpperCase()}
               </span>
-              {isDone && <span className="font-mono text-xs text-ghost/50 tracking-widest ml-2">[CLOSED]</span>}
-              {isScoring && <span className="font-mono text-xs text-neon-orange tracking-widest ml-2 animate-pulse">[SCORING]</span>}
+              {isDone    && <span className="font-mono text-xs text-ghost/50 tracking-widest ml-2">[CLOSED]</span>}
+              {isScoring && <span className="font-mono text-xs text-neon-orange tracking-widest ml-2 animate-pulse">[SCORING…]</span>}
+              {isIdle    && <span className="font-mono text-xs text-ghost/40 tracking-widest ml-2">[IDLE]</span>}
             </div>
           </div>
+          {/* Marks badge */}
           <div
-            className="px-4 py-1.5 rounded-full border font-mono text-sm font-semibold"
+            className="px-3 py-1 rounded-full border font-mono text-sm font-semibold flex-shrink-0"
             style={{ borderColor: `${meta.color}50`, color: meta.color, background: `${meta.color}10` }}
           >
             +{currentQuestion.marks} pts
           </div>
         </div>
 
-        {/* Big question text — projector friendly */}
-        <p className="font-body text-2xl md:text-3xl text-frost leading-relaxed font-semibold mb-5">
+        {/* Question text — large for projector */}
+        <p className="font-body text-2xl md:text-3xl text-frost leading-relaxed font-semibold mb-4">
           {currentQuestion.question}
         </p>
 
+        {/* Hint */}
         {currentQuestion.hint && (
-          <div className="flex items-start gap-2 pt-4 border-t border-white/5">
-            <span className="text-lg flex-shrink-0">💡</span>
+          <div className="flex items-start gap-2 pt-3 border-t border-white/5">
+            <span className="text-base flex-shrink-0">💡</span>
             <p className="font-mono text-ghost text-sm leading-relaxed italic">
               {currentQuestion.hint}
             </p>
@@ -564,15 +664,15 @@ function QuestionPanel({ currentQuestion, questionState, currentSection, showAns
         )}
       </div>
 
-      {/* Scoring reference chips */}
+      {/* Correct / Wrong chip row */}
       <div className="grid grid-cols-2 gap-3 mb-4">
         <div className="card-sm p-3 flex items-center gap-3">
           <span className="font-mono text-xs text-ghost/60">CORRECT</span>
-          <span className="font-display text-lg text-neon-green ml-auto">+{currentQuestion.marks}</span>
+          <span className="font-display text-xl text-neon-green ml-auto">+{currentQuestion.marks}</span>
         </div>
         <div className="card-sm p-3 flex items-center gap-3">
           <span className="font-mono text-xs text-ghost/60">WRONG</span>
-          <span className="font-display text-lg text-neon-red ml-auto">−{currentQuestion.wrongPenalty}</span>
+          <span className="font-display text-xl text-neon-red ml-auto">−{currentQuestion.wrongPenalty}</span>
         </div>
       </div>
 
@@ -580,27 +680,32 @@ function QuestionPanel({ currentQuestion, questionState, currentSection, showAns
       <div className="card mb-4 overflow-hidden">
         <button
           onClick={onToggleAnswer}
-          className="w-full flex items-center justify-between px-5 py-4 font-mono text-sm text-ghost hover:text-frost transition-colors tracking-widest"
+          className="w-full flex items-center justify-between px-5 py-3.5 font-mono text-sm text-ghost hover:text-frost transition-colors tracking-widest"
         >
           <span>ANSWER</span>
           <span className="text-neon-cyan font-semibold">{showAnswer ? '▲ HIDE' : '▼ REVEAL ANSWER'}</span>
         </button>
         {showAnswer && (
           <div className="px-5 pb-5 border-t border-white/5">
-            <p className="font-body text-2xl md:text-2xl text-neon-green glow-green leading-relaxed font-semibold mt-4">
+            <p className="font-body text-xl md:text-2xl text-neon-green glow-green leading-relaxed font-semibold mt-4">
               {currentQuestion.answer}
             </p>
           </div>
         )}
       </div>
 
-      {/* Quick flow buttons */}
+      {/* Quick action row */}
       <div className="flex gap-2">
         <button
           onClick={onEnd}
           disabled={isScoring || isDone}
           className="btn btn-sm flex-1"
-          style={{ width: 'auto', background: 'rgba(57,255,20,0.08)', borderColor: 'rgba(57,255,20,0.3)', color: isDone ? '#4a5580' : '#39ff14' }}
+          style={{
+            width: 'auto',
+            background: isScoring || isDone ? 'transparent' : 'rgba(57,255,20,0.08)',
+            borderColor: isScoring || isDone ? 'rgba(57,255,20,0.15)' : 'rgba(57,255,20,0.4)',
+            color: isScoring || isDone ? '#4a5580' : '#39ff14',
+          }}
         >
           ✓ END QUESTION
         </button>
@@ -626,205 +731,195 @@ function QuestionPanel({ currentQuestion, questionState, currentSection, showAns
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// CONTROL PANEL (CENTER BOTTOM) — THE HEART OF MANUAL CONTROL
+// CONTROL PANEL — center bottom (the heart of host control)
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function ControlPanel({
-  teams, activeTeamId, activeAttempt, questionState,
-  currentQuestion, currentSection, sectionScores,
+  teams, activeTeamId, activeAttempt,
+  questionState, currentQuestion, currentSection, sectionScores,
+  canUndo,
   onStartAttempt, onMarkScore, onManualScore,
-  onEndQuestion, onSkipQuestion, onNextQuestion,
-  canUndo, onUndo,
+  onEndQuestion, onSkipQuestion, onNextQuestion, onUndo,
 }) {
   const [manualTeam, setManualTeam] = useState('')
   const [manualPts,  setManualPts]  = useState('')
   const [manualErr,  setManualErr]  = useState('')
 
-  const isScoring = questionState === 'scoring'
-  const isDone    = questionState === 'done'
-  const isActive  = questionState === 'active'
-  const noQ       = !currentQuestion || questionState === 'idle'
+  const isScoring  = questionState === 'scoring'
+  const isDone     = questionState === 'done'
+  const isActive   = questionState === 'active'
+  const noQuestion = !currentQuestion || questionState === 'idle'
 
+  // Live section scoring config for display
   const scores     = sectionScores?.[currentSection] ?? { correct: 40, wrong: -10 }
   const activeTeam = teams.find(t => t.id === activeTeamId)
 
   const handleManual = () => {
     setManualErr('')
-    if (!manualTeam) { setManualErr('Select a team'); return }
+    if (!manualTeam)        { setManualErr('Select a team first'); return }
     const pts = parseInt(manualPts, 10)
-    if (isNaN(pts))  { setManualErr('Enter a valid number'); return }
-    if (pts === 0)   { setManualErr('Points cannot be zero'); return }
+    if (isNaN(pts))         { setManualErr('Enter a valid number'); return }
+    if (pts === 0)          { setManualErr('Points cannot be zero'); return }
     onManualScore(manualTeam, pts)
     setManualPts('')
     setManualTeam('')
   }
 
-  if (noQ) {
-    return (
-      <div className="panel-border-t p-4 md:p-6 flex-shrink-0 bg-void/50">
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-2">
-            <div className="w-1 h-4 bg-neon-orange rounded-full" style={{ boxShadow: '0 0 6px #ff6b35' }} />
-            <h3 className="font-display text-xs text-ghost tracking-widest">HOST CONTROLS</h3>
-          </div>
-          <button
-            onClick={onUndo}
-            disabled={!canUndo}
-            className="btn btn-ghost btn-sm"
-            style={{ width: 'auto' }}
-            title={canUndo ? 'Undo last action' : 'No action to undo yet'}
-          >
-            ↩ UNDO
-          </button>
+  return (
+    <div className="panel-border-t p-4 md:p-5 flex-shrink-0" style={{ background: 'rgba(6,6,16,0.6)' }}>
+
+      {/* Panel header row */}
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center gap-2">
+          <div className="w-1 h-4 bg-neon-orange rounded-full" style={{ boxShadow: '0 0 6px #ff6b35' }} />
+          <h3 className="font-display text-xs text-ghost tracking-widest">HOST CONTROLS</h3>
         </div>
+        {/* Secondary UNDO in control panel — always visible */}
+        <button
+          onClick={onUndo}
+          disabled={!canUndo}
+          className="btn btn-ghost btn-sm"
+          style={{ width: 'auto' }}
+          title={canUndo ? 'Undo last scoring action' : 'Nothing to undo yet'}
+        >
+          ↩ UNDO
+        </button>
+      </div>
+
+      {/* ── IF NO QUESTION ACTIVE: just show manual adjust ── */}
+      {noQuestion && (
         <ManualAdjust
-          teams={teams} manualTeam={manualTeam} manualPts={manualPts} manualErr={manualErr}
+          teams={teams}
+          manualTeam={manualTeam} manualPts={manualPts} manualErr={manualErr}
           setManualTeam={v => { setManualTeam(v); setManualErr('') }}
           setManualPts={v => { setManualPts(v); setManualErr('') }}
           onApply={handleManual}
         />
-      </div>
-    )
-  }
-
-  return (
-    <div className="panel-border-t p-4 md:p-6 flex-shrink-0 bg-void/50">
-
-      <div className="flex items-center justify-between mb-5">
-        <div className="flex items-center gap-2">
-          <div className="w-1 h-5 bg-neon-orange rounded-full" style={{ boxShadow: '0 0 6px #ff6b35' }} />
-          <h3 className="font-display text-sm text-ghost tracking-widest">HOST CONTROLS</h3>
-        </div>
-        <div className="flex gap-2">
-          <button
-            onClick={onUndo}
-            disabled={!canUndo}
-            className="btn btn-ghost btn-sm"
-            style={{ width: 'auto' }}
-            title={canUndo ? 'Undo last action' : 'No action to undo yet'}
-          >
-            ↩ UNDO
-          </button>
-        </div>
-      </div>
-
-      {/* ── ACTIVE SCORING MODE ── */}
-      {isScoring && activeTeam && (
-        <div className="card card-glow-cyan p-5 mb-5 scoring-panel">
-          <div className="flex items-center gap-3 mb-5">
-            <div
-              className="w-4 h-4 rounded-full flex-shrink-0 animate-pulse"
-              style={{ backgroundColor: activeTeam.color, boxShadow: `0 0 14px ${activeTeam.color}` }}
-            />
-            <div className="flex-1">
-              <div className="font-body text-xl font-semibold" style={{ color: activeTeam.color }}>
-                {activeTeam.name}
-              </div>
-              <div className="font-mono text-xs text-ghost mt-0.5">
-                Attempt {activeAttempt}  ·  Correct: +{scores.correct}  ·  Wrong: {scores.wrong}
-              </div>
-            </div>
-            <div className="font-display text-2xl" style={{ color: activeTeam.color }}>
-              {activeTeam.score}
-            </div>
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            <button
-              onClick={() => onMarkScore('correct')}
-              className="btn btn-success py-5 text-lg"
-            >
-              ✓ CORRECT<br />
-              <span className="text-sm opacity-70">+{scores.correct} pts</span>
-            </button>
-            <button
-              onClick={() => onMarkScore('wrong')}
-              className="btn btn-danger py-5 text-lg"
-            >
-              ✗ WRONG<br />
-              <span className="text-sm opacity-70">{scores.wrong} pts</span>
-            </button>
-          </div>
-        </div>
       )}
 
-      {/* ── TEAM ATTEMPT ROWS ── */}
-      {!isScoring && (
-        <div className="mb-5">
-          <div className="font-mono text-xs text-ghost/60 tracking-widest mb-3">
-            SELECT TEAM → START ATTEMPT
-          </div>
-          {isDone && (
-            <div className="font-mono text-xs text-ghost/40 text-center py-2 tracking-widest mb-2">
-              — QUESTION CLOSED —
+      {/* ── IF QUESTION ACTIVE ── */}
+      {!noQuestion && (
+        <>
+          {/* SCORING MODE: big correct / wrong buttons */}
+          {isScoring && activeTeam && (
+            <div className="card card-glow-cyan p-4 mb-4 scoring-panel">
+              <div className="flex items-center gap-3 mb-4">
+                <div
+                  className="w-4 h-4 rounded-full flex-shrink-0 animate-pulse"
+                  style={{ backgroundColor: activeTeam.color, boxShadow: `0 0 14px ${activeTeam.color}` }}
+                />
+                <div className="flex-1 min-w-0">
+                  <div className="font-body text-lg font-semibold truncate" style={{ color: activeTeam.color }}>
+                    {activeTeam.name}
+                  </div>
+                  <div className="font-mono text-xs text-ghost mt-0.5">
+                    Attempt {activeAttempt} · Correct: +{scores.correct} · Wrong: {scores.wrong}
+                  </div>
+                </div>
+                <div className="font-display text-2xl flex-shrink-0" style={{ color: activeTeam.color }}>
+                  {activeTeam.score}
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <button onClick={() => onMarkScore('correct')} className="btn btn-success py-5 text-lg">
+                  ✓ CORRECT<br />
+                  <span className="text-sm opacity-70">+{scores.correct} pts</span>
+                </button>
+                <button onClick={() => onMarkScore('wrong')} className="btn btn-danger py-5 text-lg">
+                  ✗ WRONG<br />
+                  <span className="text-sm opacity-70">{scores.wrong} pts</span>
+                </button>
+              </div>
             </div>
           )}
-          <div className="space-y-2">
-            {teams.map(team => (
-              <TeamAttemptRow
-                key={team.id}
-                team={team}
-                questionDone={isDone}
-                onStartAttempt={onStartAttempt}
-              />
-            ))}
+
+          {/* TEAM ATTEMPT ROWS (shown when not in scoring mode) */}
+          {!isScoring && (
+            <div className="mb-4">
+              <div className="font-mono text-xs text-ghost/50 tracking-widest mb-2">
+                SELECT TEAM → START ATTEMPT
+              </div>
+              {isDone && (
+                <div className="font-mono text-xs text-ghost/35 text-center py-1.5 tracking-widest mb-2 border border-white/5 rounded">
+                  — QUESTION CLOSED — DRAW NEXT TO CONTINUE —
+                </div>
+              )}
+              <div className="space-y-1.5">
+                {teams.map(team => (
+                  <TeamAttemptRow
+                    key={team.id}
+                    team={team}
+                    questionDone={isDone}
+                    onStartAttempt={onStartAttempt}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* FLOW CONTROL BUTTONS */}
+          {!isScoring && (
+            <div className="grid grid-cols-3 gap-2 mb-4">
+              {/* END QUESTION */}
+              <button
+                onClick={onEndQuestion}
+                disabled={isDone}
+                className="btn btn-sm py-3"
+                style={{
+                  width: 'auto',
+                  background: isDone ? 'transparent' : 'rgba(57,255,20,0.08)',
+                  borderColor: isDone ? 'rgba(57,255,20,0.12)' : 'rgba(57,255,20,0.4)',
+                  color: isDone ? '#4a5580' : '#39ff14',
+                }}
+              >
+                ✓ END<br />QUESTION
+              </button>
+
+              {/* SKIP QUESTION */}
+              <button
+                onClick={onSkipQuestion}
+                disabled={isDone}
+                className="btn btn-ghost btn-sm py-3"
+                style={{ width: 'auto' }}
+              >
+                ⏭ SKIP<br />QUESTION
+              </button>
+
+              {/* NEXT QUESTION — works from active OR done, disabled only when scoring */}
+              <button
+                onClick={onNextQuestion}
+                disabled={isScoring || !currentSection}
+                className="btn btn-primary btn-sm py-3"
+                style={{ width: 'auto' }}
+              >
+                ▶ NEXT<br />QUESTION
+              </button>
+            </div>
+          )}
+
+          {/* MANUAL ADJUSTMENT */}
+          <div className="panel-border-t pt-4">
+            <ManualAdjust
+              teams={teams}
+              manualTeam={manualTeam} manualPts={manualPts} manualErr={manualErr}
+              setManualTeam={v => { setManualTeam(v); setManualErr('') }}
+              setManualPts={v => { setManualPts(v); setManualErr('') }}
+              onApply={handleManual}
+            />
           </div>
-        </div>
+        </>
       )}
-
-      {/* ── FLOW CONTROL BUTTONS ── */}
-      {!isScoring && (
-        <div className="grid grid-cols-3 gap-2 mb-5">
-          <button
-            onClick={onEndQuestion}
-            disabled={isDone}
-            className="btn btn-sm py-3"
-            style={{
-              width: 'auto',
-              background: 'rgba(57,255,20,0.08)',
-              borderColor: isDone ? 'rgba(57,255,20,0.1)' : 'rgba(57,255,20,0.35)',
-              color: isDone ? '#4a5580' : '#39ff14',
-            }}
-          >
-            ✓ END<br/>QUESTION
-          </button>
-          <button
-            onClick={onSkipQuestion}
-            disabled={isDone}
-            className="btn btn-ghost btn-sm py-3"
-            style={{ width: 'auto' }}
-          >
-            ⏭ SKIP<br/>QUESTION
-          </button>
-          <button
-            onClick={onNextQuestion}
-            disabled={!currentSection}
-            className="btn btn-primary btn-sm py-3"
-            style={{ width: 'auto' }}
-          >
-            ▶ NEXT<br/>QUESTION
-          </button>
-        </div>
-      )}
-
-      {/* ── MANUAL ADJUSTMENT ── */}
-      <div className="panel-border-t pt-4">
-        <ManualAdjust
-          teams={teams} manualTeam={manualTeam} manualPts={manualPts} manualErr={manualErr}
-          setManualTeam={v => { setManualTeam(v); setManualErr('') }}
-          setManualPts={v => { setManualPts(v); setManualErr('') }}
-          onApply={handleManual}
-        />
-      </div>
     </div>
   )
 }
 
-/** Reusable manual score adjustment row */
+// ── Reusable manual score widget ─────────────────────────────────────────────
+
 function ManualAdjust({ teams, manualTeam, manualPts, manualErr, setManualTeam, setManualPts, onApply }) {
   return (
     <div>
-      <div className="font-mono text-xs text-ghost/60 tracking-widest mb-3">
-        MANUAL ADJUSTMENT (OVERRIDE)
+      <div className="font-mono text-xs text-ghost/50 tracking-widest mb-2">
+        MANUAL SCORE ADJUSTMENT
       </div>
       <div className="flex gap-2">
         <select
@@ -832,7 +927,7 @@ function ManualAdjust({ teams, manualTeam, manualPts, manualErr, setManualTeam, 
           onChange={e => setManualTeam(e.target.value)}
           className="input-field flex-1 text-sm"
         >
-          <option value="">Select team...</option>
+          <option value="">Select team…</option>
           {teams.map(t => <option key={t.id} value={t.id}>{t.name}</option>)}
         </select>
         <input
@@ -840,26 +935,27 @@ function ManualAdjust({ teams, manualTeam, manualPts, manualErr, setManualTeam, 
           value={manualPts}
           onChange={e => setManualPts(e.target.value)}
           placeholder="±pts"
-          className="input-field w-24 text-sm"
+          className="input-field w-20 text-sm"
           onKeyDown={e => e.key === 'Enter' && onApply()}
         />
         <button
           onClick={onApply}
-          className="btn btn-ghost btn-sm px-5 whitespace-nowrap"
-          style={{ width: 'auto' }}
+          className="btn btn-ghost btn-sm whitespace-nowrap"
+          style={{ width: 'auto', minWidth: '70px' }}
         >
           APPLY
         </button>
       </div>
-      {manualErr && <p className="text-neon-red text-sm font-mono mt-2">{manualErr}</p>}
-      <p className="font-mono text-ghost/30 text-xs mt-2">
-        Use negative numbers to deduct. No validation — full host override.
+      {manualErr && <p className="text-neon-red text-sm font-mono mt-1.5">{manualErr}</p>}
+      <p className="font-mono text-ghost/25 text-xs mt-1.5">
+        Negative to deduct · No restrictions · Full host override
       </p>
     </div>
   )
 }
 
-/** Single team row with Attempt 1 / Attempt 2 buttons */
+// ── Team row with Attempt 1 / Attempt 2 buttons ──────────────────────────────
+
 function TeamAttemptRow({ team, questionDone, onStartAttempt }) {
   const att1Done   = team.att1Scored
   const att2Done   = team.att2Scored
@@ -868,10 +964,13 @@ function TeamAttemptRow({ team, questionDone, onStartAttempt }) {
 
   return (
     <div className="flex items-center gap-2 py-1.5 px-3 rounded-lg border border-white/5 hover:border-white/10 transition-colors">
+      {/* Team colour dot */}
       <div
-        className="w-3 h-3 rounded-full flex-shrink-0"
-        style={{ backgroundColor: team.color, boxShadow: `0 0 6px ${team.color}88` }}
+        className="w-2.5 h-2.5 rounded-full flex-shrink-0"
+        style={{ backgroundColor: team.color, boxShadow: `0 0 5px ${team.color}88` }}
       />
+
+      {/* Team name + score */}
       <span
         className="font-mono text-sm flex-1 truncate min-w-0 font-medium"
         style={{ color: team.color }}
@@ -879,47 +978,45 @@ function TeamAttemptRow({ team, questionDone, onStartAttempt }) {
       >
         {team.name}
       </span>
-      <span className="font-display text-sm text-ghost/70 mr-2">{team.score}</span>
+      <span className="font-display text-sm text-ghost/60 flex-shrink-0 mr-1">
+        {team.score}
+      </span>
 
       {/* Attempt 1 */}
-      <div className="flex items-center gap-1">
-        {att1Done ? (
-          <span className={`result-badge ${att1Result === 'correct' ? 'result-badge-correct' : 'result-badge-wrong'} text-xs px-2 py-1`}>
-            ATT1 {att1Result === 'correct' ? '✓' : '✗'}
-          </span>
-        ) : (
-          <button
-            className="attempt-btn attempt-btn-1 text-sm px-3 py-1.5"
-            onClick={() => !questionDone && onStartAttempt(team.id, 1)}
-            disabled={questionDone}
-          >
-            ATT 1
-          </button>
-        )}
-      </div>
+      {att1Done ? (
+        <span className={`result-badge ${att1Result === 'correct' ? 'result-badge-correct' : 'result-badge-wrong'}`}>
+          A1 {att1Result === 'correct' ? '✓' : '✗'}
+        </span>
+      ) : (
+        <button
+          className="attempt-btn attempt-btn-1"
+          onClick={() => !questionDone && onStartAttempt(team.id, 1)}
+          disabled={questionDone}
+        >
+          ATT 1
+        </button>
+      )}
 
       {/* Attempt 2 */}
-      <div className="flex items-center gap-1">
-        {att2Done ? (
-          <span className={`result-badge ${att2Result === 'correct' ? 'result-badge-correct' : 'result-badge-wrong'} text-xs px-2 py-1`}>
-            ATT2 {att2Result === 'correct' ? '✓' : '✗'}
-          </span>
-        ) : (
-          <button
-            className="attempt-btn attempt-btn-2 text-sm px-3 py-1.5"
-            onClick={() => !questionDone && onStartAttempt(team.id, 2)}
-            disabled={questionDone}
-          >
-            ATT 2
-          </button>
-        )}
-      </div>
+      {att2Done ? (
+        <span className={`result-badge ${att2Result === 'correct' ? 'result-badge-correct' : 'result-badge-wrong'}`}>
+          A2 {att2Result === 'correct' ? '✓' : '✗'}
+        </span>
+      ) : (
+        <button
+          className="attempt-btn attempt-btn-2"
+          onClick={() => !questionDone && onStartAttempt(team.id, 2)}
+          disabled={questionDone}
+        >
+          ATT 2
+        </button>
+      )}
     </div>
   )
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// LEADERBOARD PANEL (RIGHT)
+// LEADERBOARD PANEL — right column
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function LeaderboardPanel({ teams, activeTeamId }) {
@@ -930,7 +1027,8 @@ function LeaderboardPanel({ teams, activeTeamId }) {
 
   return (
     <div className="p-4 flex flex-col h-full">
-      <div className="flex items-center gap-2 mb-5">
+
+      <div className="flex items-center gap-2 mb-4">
         <div className="w-1 h-4 bg-neon-gold rounded-full" style={{ boxShadow: '0 0 6px #ffd700' }} />
         <h3 className="font-display text-xs text-ghost tracking-widest">LIVE LEADERBOARD</h3>
       </div>
@@ -947,10 +1045,10 @@ function LeaderboardPanel({ teams, activeTeamId }) {
               style={isActive ? { '--team-color': team.color } : {}}
             >
               <div className="flex items-center gap-2">
-                <span className="text-base w-7 flex-shrink-0 text-center">
+                <span className="text-base w-6 flex-shrink-0 text-center">
                   {i < 3
                     ? RANK_ICONS[i]
-                    : <span className="font-mono text-ghost text-xs">{i + 1}</span>
+                    : <span className="font-mono text-ghost/60 text-xs">{i + 1}</span>
                   }
                 </span>
                 <div
@@ -965,7 +1063,7 @@ function LeaderboardPanel({ teams, activeTeamId }) {
                   {team.name}
                 </span>
                 <span
-                  className={`font-display text-xl flex-shrink-0 ${isActive ? 'animate-score-pop' : ''}`}
+                  className={`font-display text-lg flex-shrink-0 ${isActive ? 'animate-score-pop' : ''}`}
                   style={{
                     color: team.color,
                     textShadow: isActive ? `0 0 12px ${team.color}` : undefined,
@@ -974,13 +1072,14 @@ function LeaderboardPanel({ teams, activeTeamId }) {
                   {team.score}
                 </span>
               </div>
-              <div className="score-bar mt-2">
+
+              <div className="score-bar">
                 <div
                   className="score-bar-fill"
                   style={{
-                    width: `${barWidth}%`,
+                    width:           `${barWidth}%`,
                     backgroundColor: team.color,
-                    boxShadow: `0 0 6px ${team.color}88`,
+                    boxShadow:       `0 0 6px ${team.color}88`,
                   }}
                 />
               </div>
@@ -989,17 +1088,18 @@ function LeaderboardPanel({ teams, activeTeamId }) {
         })}
       </div>
 
+      {/* Summary footer */}
       {teams.length > 0 && (
-        <div className="mt-4 pt-4 panel-border-t grid grid-cols-2 gap-3">
-          <div className="card-sm p-3 text-center">
+        <div className="mt-4 pt-4 panel-border-t grid grid-cols-2 gap-2">
+          <div className="card-sm p-2.5 text-center">
             <div className="font-mono text-ghost text-xs mb-1">LEADER</div>
-            <div className="font-display text-neon-gold text-sm truncate" title={teams[0]?.name}>
+            <div className="font-body text-sm font-semibold truncate" style={{ color: teams[0]?.color }} title={teams[0]?.name}>
               {teams[0]?.name ?? '—'}
             </div>
           </div>
-          <div className="card-sm p-3 text-center">
+          <div className="card-sm p-2.5 text-center">
             <div className="font-mono text-ghost text-xs mb-1">TOP SCORE</div>
-            <div className="font-display text-neon-gold text-xl">{teams[0]?.score ?? 0}</div>
+            <div className="font-display text-lg text-neon-gold">{teams[0]?.score ?? 0}</div>
           </div>
         </div>
       )}
@@ -1008,35 +1108,53 @@ function LeaderboardPanel({ teams, activeTeamId }) {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// END GAME SCREEN
+// END GAME SCREEN — full leaderboard + section warnings
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function EndGameScreen({ gameState, onReset }) {
   const { leaderboard, endWarnings } = gameState
   const winner = leaderboard[0]
 
-  return (
-    <div className="min-h-screen flex flex-col items-center justify-start p-6 relative overflow-hidden">
-      <div className="absolute inset-0 opacity-5"
-           style={{ background: 'radial-gradient(ellipse at center, #ffd700 0%, transparent 60%)' }} />
+  const scores   = leaderboard.map(t => t.score)
+  const maxScore = scores.length ? Math.max(...scores) : 1
+  const minFloor = Math.min(...scores, 0)
+  const range    = Math.max(maxScore - minFloor, 1)
 
-      {/* Header */}
-      <div className="text-center mb-10 mt-8 relative z-10">
-        <div className="text-6xl mb-4">🏆</div>
-        <h1 className="font-display text-5xl md:text-6xl tracking-widest text-neon-gold mb-2"
-            style={{ textShadow: '0 0 30px rgba(255,215,0,0.6), 0 0 60px rgba(255,215,0,0.3)' }}>
+  return (
+    <div className="min-h-screen flex flex-col items-center justify-start p-4 md:p-8 relative overflow-hidden">
+      <div className="grid-overlay" />
+      <div className="scanlines" />
+
+      {/* Gold radial glow */}
+      <div
+        className="absolute inset-0 opacity-5 pointer-events-none"
+        style={{ background: 'radial-gradient(ellipse at 50% 20%, #ffd700 0%, transparent 65%)' }}
+      />
+
+      {/* ── Trophy header ── */}
+      <div className="text-center mb-8 mt-6 relative z-10">
+        <div className="text-6xl mb-3">🏆</div>
+        <h1
+          className="font-display text-4xl md:text-6xl tracking-widest text-neon-gold mb-1"
+          style={{ textShadow: '0 0 30px rgba(255,215,0,0.6), 0 0 70px rgba(255,215,0,0.25)' }}
+        >
           Q-MANIA
         </h1>
-        <div className="font-display text-xl tracking-widest text-frost/70 mb-4">
+        <div className="font-display text-base md:text-xl tracking-[0.3em] text-frost/60 mb-5">
           FINAL SCORES
         </div>
+
+        {/* Winner badge */}
         {winner && (
           <div
-            className="inline-flex items-center gap-3 px-6 py-3 rounded-full border"
-            style={{ borderColor: `${winner.color}50`, background: `${winner.color}10` }}
+            className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full border"
+            style={{ borderColor: `${winner.color}50`, background: `${winner.color}12` }}
           >
             <span className="text-2xl">🥇</span>
-            <span className="font-display text-xl" style={{ color: winner.color, textShadow: `0 0 15px ${winner.color}` }}>
+            <span
+              className="font-display text-lg md:text-xl"
+              style={{ color: winner.color, textShadow: `0 0 16px ${winner.color}` }}
+            >
               {winner.name}
             </span>
             <span className="font-display text-2xl text-neon-gold">{winner.score}</span>
@@ -1046,66 +1164,97 @@ function EndGameScreen({ gameState, onReset }) {
 
       <div className="w-full max-w-2xl relative z-10 space-y-4 mb-8">
 
-        {/* Full leaderboard */}
-        <div className="card p-6">
+        {/* ── Full final leaderboard ── */}
+        <div className="card p-5 md:p-6">
           <div className="flex items-center gap-2 mb-5">
             <div className="w-1 h-5 bg-neon-gold rounded-full" style={{ boxShadow: '0 0 6px #ffd700' }} />
             <h2 className="font-display text-sm tracking-widest text-ghost">FINAL STANDINGS</h2>
           </div>
+
           <div className="space-y-3">
-            {leaderboard.map((team, i) => (
-              <div
-                key={team.id}
-                className="flex items-center gap-4 p-4 rounded-lg border"
-                style={{
-                  borderColor: i === 0 ? `${team.color}50` : 'rgba(255,255,255,0.06)',
-                  background:  i === 0 ? `${team.color}08` : 'rgba(13,13,36,0.4)',
-                }}
-              >
-                <span className="text-2xl w-8 text-center">
-                  {i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : (
-                    <span className="font-mono text-ghost text-base">{i + 1}</span>
-                  )}
-                </span>
+            {leaderboard.map((team, i) => {
+              const barWidth = Math.max(0, ((team.score - minFloor) / range) * 100)
+              const isFirst  = i === 0
+
+              return (
                 <div
-                  className="w-3 h-3 rounded-full flex-shrink-0"
-                  style={{ backgroundColor: team.color, boxShadow: `0 0 8px ${team.color}` }}
-                />
-                <span className="font-body text-xl flex-1 font-semibold" style={{ color: i === 0 ? team.color : undefined }}>
-                  {team.name}
-                </span>
-                <span className="font-display text-3xl" style={{ color: team.color, textShadow: `0 0 10px ${team.color}88` }}>
-                  {team.score}
-                </span>
-              </div>
-            ))}
+                  key={team.id}
+                  className="rounded-lg border p-3.5 md:p-4"
+                  style={{
+                    borderColor: isFirst ? `${team.color}60` : 'rgba(255,255,255,0.07)',
+                    background:  isFirst ? `${team.color}0c` : 'rgba(13,13,36,0.5)',
+                  }}
+                >
+                  <div className="flex items-center gap-3 md:gap-4">
+                    {/* Rank */}
+                    <span className="text-xl md:text-2xl w-7 text-center flex-shrink-0">
+                      {i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : (
+                        <span className="font-mono text-ghost/60 text-sm">{i + 1}</span>
+                      )}
+                    </span>
+                    {/* Colour dot */}
+                    <div
+                      className="w-3 h-3 rounded-full flex-shrink-0"
+                      style={{ backgroundColor: team.color, boxShadow: `0 0 8px ${team.color}` }}
+                    />
+                    {/* Name */}
+                    <span
+                      className="font-body text-lg md:text-xl flex-1 font-semibold truncate"
+                      style={{ color: isFirst ? team.color : undefined }}
+                      title={team.name}
+                    >
+                      {team.name}
+                    </span>
+                    {/* Score */}
+                    <span
+                      className="font-display text-2xl md:text-3xl flex-shrink-0"
+                      style={{ color: team.color, textShadow: `0 0 10px ${team.color}88` }}
+                    >
+                      {team.score}
+                    </span>
+                  </div>
+
+                  {/* Score bar */}
+                  <div className="score-bar mt-2.5">
+                    <div
+                      className="score-bar-fill"
+                      style={{
+                        width:           `${barWidth}%`,
+                        backgroundColor: team.color,
+                        boxShadow:       `0 0 6px ${team.color}88`,
+                      }}
+                    />
+                  </div>
+                </div>
+              )
+            })}
           </div>
         </div>
 
-        {/* End-game warnings */}
+        {/* ── Section attempt warnings ── */}
         {endWarnings && endWarnings.length > 0 && (
-          <div className="card p-6 border-neon-orange/30" style={{ borderColor: 'rgba(255,107,53,0.3)' }}>
-            <div className="flex items-center gap-2 mb-4">
-              <span className="text-xl">⚠️</span>
+          <div className="card p-5" style={{ borderColor: 'rgba(255,107,53,0.35)' }}>
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-lg">⚠️</span>
               <h2 className="font-display text-sm tracking-widest text-neon-orange">
                 SECTION ATTEMPT WARNINGS
               </h2>
             </div>
-            <p className="font-mono text-ghost/60 text-xs mb-4">
-              The following teams did not answer any question in these sections.
-              No penalty has been applied — host decision only.
+            <p className="font-mono text-ghost/50 text-xs mb-4 leading-relaxed">
+              These teams did not answer any question in the listed sections.
+              No penalty applied — host decision only.
             </p>
             <div className="space-y-4">
               {endWarnings.map(w => (
                 <div key={w.section}>
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="text-base">{getSectionMeta(w.section).icon}</span>
+                    <span>{getSectionMeta(w.section).icon}</span>
                     <span className="font-mono text-sm tracking-widest" style={{ color: getSectionMeta(w.section).color }}>
                       {w.label.toUpperCase()}
                     </span>
-                    <span className="font-mono text-xs text-ghost">— no attempts from:</span>
+                    <span className="font-mono text-xs text-ghost/50">— no attempts from:</span>
                   </div>
-                  <div className="flex flex-wrap gap-2 pl-7">
+                  <div className="flex flex-wrap gap-2 pl-6">
                     {w.missed.map(t => (
                       <span
                         key={t.id}
@@ -1122,22 +1271,22 @@ function EndGameScreen({ gameState, onReset }) {
           </div>
         )}
 
+        {/* All sections attempted notice */}
         {endWarnings && endWarnings.length === 0 && (
-          <div
-            className="card p-4 text-center"
-            style={{ borderColor: 'rgba(57,255,20,0.25)' }}
-          >
+          <div className="card p-4 text-center" style={{ borderColor: 'rgba(57,255,20,0.25)' }}>
             <span className="text-xl">✅</span>
-            <p className="font-mono text-neon-green text-sm mt-2">All teams attempted all mandatory sections.</p>
+            <p className="font-mono text-neon-green text-sm mt-2">
+              All teams attempted all mandatory sections.
+            </p>
           </div>
         )}
       </div>
 
-      {/* Actions */}
-      <div className="flex gap-4 relative z-10 pb-8">
+      {/* Action buttons */}
+      <div className="relative z-10 flex gap-3 pb-10">
         <button
           onClick={onReset}
-          className="btn btn-danger px-10 py-4 text-base"
+          className="btn btn-danger px-8 md:px-12 py-4 text-base"
           style={{ width: 'auto' }}
         >
           ↺ PLAY AGAIN

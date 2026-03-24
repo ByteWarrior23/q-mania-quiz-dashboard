@@ -4,21 +4,21 @@ export default {
   theme: {
     extend: {
       colors: {
-        void:         '#060610',
-        panel:        '#0d0d24',
-        'panel-light':'#131330',
-        frost:        '#c8d8ff',
-        ghost:        '#4a5580',
-        'neon-cyan':  '#00d4ff',
-        'neon-green': '#39ff14',
-        'neon-orange':'#ff6b35',
-        'neon-red':   '#ff2244',
-        'neon-gold':  '#ffd700',
-        'neon-purple':'#a855f7',
+        void:          '#060610',
+        panel:         '#0d0d24',
+        'panel-light': '#131330',
+        frost:         '#c8d8ff',
+        ghost:         '#4a5580',
+        'neon-cyan':   '#00d4ff',
+        'neon-green':  '#39ff14',
+        'neon-orange': '#ff6b35',
+        'neon-red':    '#ff2244',
+        'neon-gold':   '#ffd700',
+        'neon-purple': '#a855f7',
       },
       fontFamily: {
-        display: ['Orbitron',      'monospace'],
-        body:    ['Rajdhani',      'sans-serif'],
+        display: ['Orbitron',         'monospace'],
+        body:    ['Rajdhani',         'sans-serif'],
         mono:    ['"JetBrains Mono"', 'monospace'],
       },
       boxShadow: {
@@ -35,7 +35,7 @@ export default {
       },
       keyframes: {
         slideIn:  { from: { opacity: 0, transform: 'translateY(8px)' }, to: { opacity: 1, transform: 'translateY(0)' } },
-        fadeIn:   { from: { opacity: 0 }, to: { opacity: 1 } },
+        fadeIn:   { from: { opacity: 0 },                               to: { opacity: 1 } },
         scorePop: { '0%': { transform: 'scale(1)' }, '50%': { transform: 'scale(1.08)' }, '100%': { transform: 'scale(1)' } },
       },
     },

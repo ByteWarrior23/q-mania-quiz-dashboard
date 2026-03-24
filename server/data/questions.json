@@ -2,139 +2,169 @@
   "physics": [
     {
       "question": "What is the approximate speed of light in a vacuum?",
-      "answer": "3 x 10^8 metres per second (300,000 km/s)",
-      "marks": 10,
+      "answer": "3 × 10⁸ metres per second (300,000 km/s)",
+      "marks": 40,
       "hint": "It takes about 8 minutes to travel from the Sun to Earth."
     },
     {
       "question": "What fundamental force holds the nucleus of an atom together?",
       "answer": "The strong nuclear force",
-      "marks": 10,
+      "marks": 40,
       "hint": "It is the strongest of the four fundamental forces."
     },
     {
       "question": "State Newton's Second Law of Motion.",
-      "answer": "Force = mass x acceleration (F = ma)",
-      "marks": 15,
+      "answer": "Force = mass × acceleration (F = ma)",
+      "marks": 40,
       "hint": "It relates net force, mass, and how an object accelerates."
     },
     {
-      "question": "What is the unit of electrical resistance?",
-      "answer": "Ohm (Omega)",
-      "marks": 5,
-      "hint": "Named after the German physicist Georg Simon ___."
+      "question": "What is the SI unit of electrical resistance?",
+      "answer": "Ohm (Ω)",
+      "marks": 40,
+      "hint": "Named after German physicist Georg Simon ___."
     },
     {
       "question": "What phenomenon causes light to bend when passing from one medium to another?",
       "answer": "Refraction",
-      "marks": 10,
+      "marks": 40,
       "hint": "This is why a straw appears bent in a glass of water."
     },
     {
-      "question": "What is the relationship described by E = mc^2?",
-      "answer": "Energy equals mass times the speed of light squared - mass and energy are equivalent and interconvertible.",
-      "marks": 20,
-      "hint": "Proposed by Einstein in his special theory of relativity."
+      "question": "What does Einstein's equation E = mc² describe?",
+      "answer": "Energy equals mass times the speed of light squared — mass and energy are equivalent and interconvertible.",
+      "marks": 40,
+      "hint": "Proposed in the special theory of relativity."
     },
     {
       "question": "What temperature is absolute zero in Celsius?",
-      "answer": "-273.15 C (or 0 Kelvin)",
-      "marks": 10,
-      "hint": "Below this, no lower temperature is theoretically possible."
+      "answer": "−273.15°C (or 0 Kelvin)",
+      "marks": 40,
+      "hint": "No temperature lower than this is theoretically possible."
     },
     {
       "question": "What is the name of the quantum of light?",
       "answer": "Photon",
-      "marks": 5,
-      "hint": "These are massless particles that travel at the speed of light."
+      "marks": 40,
+      "hint": "A massless particle that travels at the speed of light."
+    },
+    {
+      "question": "What is Ohm's Law?",
+      "answer": "Voltage = Current × Resistance (V = IR)",
+      "marks": 40,
+      "hint": "Relates voltage, current, and resistance in a circuit."
+    },
+    {
+      "question": "What is the half-life of Carbon-14?",
+      "answer": "Approximately 5,730 years",
+      "marks": 40,
+      "hint": "Used in radiocarbon dating of organic materials."
     }
   ],
   "sciFi": [
     {
       "question": "In Star Wars, what material are lightsaber blades made of?",
       "answer": "Plasma (contained within a magnetic field created by a kyber crystal)",
-      "marks": 10,
-      "hint": "The colour depends on the crystal's alignment."
+      "marks": 40,
+      "hint": "The colour depends on the alignment of the crystal."
     },
     {
-      "question": "Which fictional spaceship is capable of the Kessel Run in less than 12 parsecs?",
+      "question": "Which spaceship can make the Kessel Run in less than 12 parsecs?",
       "answer": "The Millennium Falcon",
-      "marks": 5,
+      "marks": 40,
       "hint": "Owned by a certain smuggler-turned-hero."
     },
     {
       "question": "In the Dune universe, what substance grants limited prescience and enables space travel?",
       "answer": "Spice (Melange)",
-      "marks": 10,
+      "marks": 40,
       "hint": "Only found on the desert planet Arrakis."
     },
     {
-      "question": "What was the name of the AI spaceship computer in 2001: A Space Odyssey?",
+      "question": "What was the name of the AI computer in 2001: A Space Odyssey?",
       "answer": "HAL 9000",
-      "marks": 5,
-      "hint": "Famous for saying: 'I'm sorry Dave, I can't do that.'"
+      "marks": 40,
+      "hint": "Famous for: 'I'm sorry Dave, I can't do that.'"
     },
     {
-      "question": "In The Hitchhiker's Guide to the Galaxy, what is the answer to 'life, the universe, and everything'?",
+      "question": "In The Hitchhiker's Guide to the Galaxy, what is the answer to life, the universe, and everything?",
       "answer": "42",
-      "marks": 5,
-      "hint": "The question itself remained unknown for millions of years."
+      "marks": 40,
+      "hint": "The question itself was unknown for millions of years."
     },
     {
       "question": "What technology allows ships to travel faster than light in Star Trek?",
       "answer": "Warp drive (powered by matter-antimatter annihilation)",
-      "marks": 10,
-      "hint": "The speed is measured in warp factors."
+      "marks": 40,
+      "hint": "Speed is measured in warp factors."
     },
     {
-      "question": "In Isaac Asimov's fiction, what is the First Law of Robotics?",
+      "question": "What is the First Law of Robotics in Isaac Asimov's fiction?",
       "answer": "A robot may not injure a human being or, through inaction, allow a human being to come to harm.",
-      "marks": 15,
-      "hint": "There are three laws; this one takes highest priority."
+      "marks": 40,
+      "hint": "There are three laws; this one takes the highest priority."
     },
     {
-      "question": "What is the name of the neural lace/brain-computer interface in Elon Musk's venture inspired partly by sci-fi?",
-      "answer": "Neuralink (inspired by concepts like neural lace from The Culture series by Iain M. Banks)",
-      "marks": 15,
-      "hint": "It aims to merge human cognition with artificial intelligence."
+      "question": "In the Matrix trilogy, what colour pill lets Neo see the truth?",
+      "answer": "The red pill",
+      "marks": 40,
+      "hint": "The blue pill would have kept him in blissful ignorance."
+    },
+    {
+      "question": "What fictional metal is Captain America's shield made from?",
+      "answer": "Vibranium",
+      "marks": 40,
+      "hint": "It also originates from the African nation of Wakanda."
+    },
+    {
+      "question": "Name the supercomputer that beat world chess champion Garry Kasparov in 1997.",
+      "answer": "Deep Blue (built by IBM)",
+      "marks": 40,
+      "hint": "This real event inspired many sci-fi AI storylines."
     }
   ],
   "puzzles": [
     {
-      "question": "I speak without a mouth and hear without ears. I have no body, but I come alive with the wind. What am I?",
+      "question": "I speak without a mouth and hear without ears. I have no body, but I come alive with wind. What am I?",
       "answer": "An echo",
-      "marks": 10,
-      "hint": "Sound travels, bounces, and returns to you."
+      "marks": 60,
+      "hint": "Sound travels, bounces off a surface, and returns to you."
     },
     {
       "question": "A man walks into a restaurant and orders albatross soup. After one sip, he goes home and kills himself. Why?",
-      "answer": "He was stranded on a deserted island after a shipwreck. A fellow survivor told him he was eating 'albatross soup', but it was actually his wife. He realised the truth when he tasted real albatross soup at the restaurant.",
-      "marks": 20,
-      "hint": "This is a lateral thinking puzzle - think about what he might have eaten before."
+      "answer": "He was stranded after a shipwreck; a survivor told him he was eating 'albatross soup' but it was actually his wife. Tasting real albatross soup at the restaurant revealed the deception.",
+      "marks": 60,
+      "hint": "Lateral thinking — think about what he might have eaten before."
     },
     {
       "question": "What has keys but no locks, space but no room, and you can enter but can't go inside?",
       "answer": "A keyboard",
-      "marks": 10,
+      "marks": 60,
       "hint": "You use it every day to type."
     },
     {
-      "question": "If you have a 3-litre jug and a 5-litre jug, how do you measure exactly 4 litres of water?",
-      "answer": "Fill the 5L jug. Pour into 3L until full (leaves 2L in 5L). Empty the 3L. Pour 2L from 5L into 3L. Fill 5L again. Pour into 3L until full (only 1L needed). 5L now has exactly 4L.",
-      "marks": 20,
+      "question": "Using a 3-litre jug and a 5-litre jug, how do you measure exactly 4 litres of water?",
+      "answer": "Fill the 5L, pour into 3L until full (2L left in 5L). Empty 3L. Pour 2L into 3L. Refill 5L, pour into 3L until full (needs 1L). 5L now has exactly 4L.",
+      "marks": 60,
       "hint": "You'll need to fill and empty the jugs multiple times."
     },
     {
-      "question": "You are in a room with three light switches. One controls a bulb in the next room (the door is closed). How do you determine which switch controls the bulb, with only one trip into the next room?",
-      "answer": "Turn switch 1 on for several minutes, then off. Turn switch 2 on. Enter the room - if the bulb is on it's switch 2; if it's off but warm it's switch 1; if it's off and cold it's switch 3.",
-      "marks": 20,
-      "hint": "A light bulb generates heat when it's been on."
+      "question": "Three switches outside a room each control one bulb inside. With only one trip into the room, how do you identify which switch controls which bulb?",
+      "answer": "Turn Switch 1 on for a few minutes, then off. Turn Switch 2 on. Enter: on = Switch 2; off but warm = Switch 1; off and cold = Switch 3.",
+      "marks": 60,
+      "hint": "A light bulb generates heat when it has been on."
     },
     {
-      "question": "A boat has a ladder hanging off it. The ladder has 10 rungs, each 30cm apart. The bottom rung is touching the water. The tide rises 90cm. How many rungs are under water?",
-      "answer": "Still just the bottom rung (or zero above water). The boat rises with the tide, so the ladder position relative to the water stays the same.",
-      "marks": 15,
-      "hint": "Think about what happens to a boat when the tide rises."
+      "question": "A boat has a ladder hanging over its side. The lowest rung touches the water. The tide rises 90 cm. How many rungs are now submerged if the rungs are 30 cm apart?",
+      "answer": "Still only the bottom rung (or none). The boat rises with the tide so the ladder stays at the same position relative to the water.",
+      "marks": 60,
+      "hint": "Think about what happens to the boat when the tide rises."
+    },
+    {
+      "question": "You have 12 balls, all identical in appearance. One is either heavier or lighter. Using a balance scale with only 3 weighings, how do you find the odd ball and whether it is heavy or light?",
+      "answer": "Divide into three groups of 4. Weigh Group 1 vs Group 2. If balanced, odd ball is in Group 3 — use next 2 weighings to isolate. If unbalanced, use known-good balls to narrow down in weighings 2 and 3.",
+      "marks": 60,
+      "hint": "Divide into three equal groups for the first weighing."
     }
   ]
 }
