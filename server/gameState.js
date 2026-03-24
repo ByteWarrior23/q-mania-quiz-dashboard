@@ -10,7 +10,7 @@
  *   Physics / Sci-Fi → ceil(1.7 × X)
  *   Puzzles          → ceil(0.6 × X)
  *
- * MAX TEAMS: 8
+ * MAX TEAMS: 25
  */
 
 const TEAM_COLORS = [
@@ -24,7 +24,13 @@ const TEAM_COLORS = [
   '#10b981', // emerald
 ]
 
-const MAX_TEAMS = 8
+const MAX_TEAMS = 25
+
+const getTeamColor = (index) => {
+  if (TEAM_COLORS[index]) return TEAM_COLORS[index]
+  const hue = (index * 37) % 360
+  return `hsl(${hue}, 82%, 58%)`
+}
 
 // ─── Section scoring — the ONLY source of truth for marks ───────────────────
 const SECTION_SCORES = {
@@ -142,7 +148,7 @@ export default class GameState {
       id:    `team-${i}`,
       name,
       score: 0,
-      color: TEAM_COLORS[i],
+      color: getTeamColor(i),
     }))
     this.phase = 'game'
   }

@@ -1,0 +1,80 @@
+version: "2"
+type: frontend
+tech_stack:
+  - JavaScript
+  - React
+  - Vite
+  - Socket.IO
+  - Tailwind CSS
+routes:
+  - path: /
+    file: client/src/App.jsx
+    auth_required: false
+    description: Single-page host console for quiz setup, live game control, and end-game leaderboard.
+features:
+  - name: Team Setup
+    description: Host creates teams, validates names, and starts the game.
+    files:
+      - client/src/App.jsx
+      - server/gameState.js
+    entry_route: /
+    user_interactions:
+      - Add team rows up to maximum team limit.
+      - Enter unique non-empty team names.
+      - Remove optional team rows.
+      - Click Launch Game to begin.
+    api_calls:
+      - method: socket
+        endpoint: setup:teams
+    auth_required: false
+  - name: Live Quiz Host Control
+    description: Host selects sections, draws questions, runs attempts, and scores teams in real time.
+    files:
+      - client/src/App.jsx
+      - server/index.js
+      - server/gameState.js
+      - server/data/questions.json
+    entry_route: /
+    user_interactions:
+      - Select a section and draw next question.
+      - Reveal answer and hints.
+      - Start attempt 1 or attempt 2 for a team.
+      - Mark correct or wrong score and apply manual adjustments.
+      - Skip, end, reset question, and undo last scoring action.
+    api_calls:
+      - method: socket
+        endpoint: section:select
+      - method: socket
+        endpoint: question:next
+      - method: socket
+        endpoint: attempt:start
+      - method: socket
+        endpoint: score:mark
+      - method: socket
+        endpoint: score:manual
+      - method: socket
+        endpoint: action:undo
+    auth_required: false
+  - name: Dynamic Leaderboard and End-Game Results
+    description: Displays live ranking during gameplay and final standings at game end.
+    files:
+      - client/src/App.jsx
+      - server/gameState.js
+    entry_route: /
+    user_interactions:
+      - View live leaderboard updates while scoring.
+      - End game and see final standings.
+      - Review section-attempt warnings and reset game.
+    api_calls:
+      - method: socket
+        endpoint: game:end
+      - method: socket
+        endpoint: game:reset
+    auth_required: false
+known_limitations:
+  - issue: No authentication/authorization layer; host controls are open to any connected client.
+    location: client/src/App.jsx
+    impact: Any connected user can trigger gameplay mutations.
+  - issue: App is a single-page host workflow without dedicated route segmentation.
+    location: client/src/App.jsx
+    impact: Navigation/state testing must be phase-based rather than route-based.

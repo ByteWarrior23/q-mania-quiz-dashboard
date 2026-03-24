@@ -1,0 +1,181 @@
+You are an expert full-stack developer. Build a Quiz Dashboard Web Application for a live event called "Q-Mania Club".
+
+This system will be operated by a human host during a live quiz, so the design must prioritize MANUAL CONTROL over automation.
+
+-------------------------------------
+🧠 CORE DESIGN PRINCIPLE
+-------------------------------------
+ASSUME:
+- A human operator is always controlling the system
+- Avoid complex automation
+- Provide buttons for every important action
+
+The system should assist the host, NOT replace decision-making.
+
+-------------------------------------
+⚙️ TECH STACK
+-------------------------------------
+Frontend: React + Tailwind
+Backend: Node.js + Express
+Database: MongoDB or JSON
+Realtime: Socket.IO (leaderboard updates)
+
+-------------------------------------
+📊 INITIAL SETUP
+-------------------------------------
+- Input number of teams (X)
+- Input team names
+- Initialize scores = 0
+
+-------------------------------------
+📚 SECTIONS
+-------------------------------------
+Section 1: Physics → +40 / -10  
+Section 2: Sci-Fi → +40 / -10  
+Section 3: Puzzles → +60 / -20  
+
+-------------------------------------
+📏 QUESTION COUNT
+-------------------------------------
+- Section 1 = ceil(1.7 * X)
+- Section 2 = ceil(1.7 * X)
+- Section 3 = ceil(0.6 * X)
+
+-------------------------------------
+📦 QUESTION SYSTEM
+-------------------------------------
+- Questions stored in backend
+- Random fetch (button controlled)
+- No repetition
+
+-------------------------------------
+🖥️ UI DESIGN
+-------------------------------------
+LEFT PANEL:
+- Section selection
+- Remaining questions
+
+CENTER PANEL:
+- Question display
+- Buttons:
+   - "Next Random Question"
+   - "Reveal Answer"
+
+RIGHT PANEL:
+- Leaderboard (live)
+
+-------------------------------------
+🎮 FULL MANUAL CONTROL PANEL (VERY IMPORTANT)
+-------------------------------------
+Create a CONTROL PANEL with these buttons:
+
+TEAM CONTROL:
+- Select Team (dropdown)
+- Highlight active team
+
+SCORING BUTTONS:
+- "+40", "-10" (Section 1 & 2)
+- "+60", "-20" (Section 3)
+
+OR dynamic:
+- "Correct"
+- "Wrong"
+(auto apply marks based on section)
+
+FLOW CONTROL:
+- "Start Attempt 1"
+- "Start Attempt 2"
+- "End Question"
+- "Skip Question"
+
+UTILITY BUTTONS:
+- "Undo Last Action" (VERY IMPORTANT)
+- "Reset Current Question"
+- "Next Question"
+
+-------------------------------------
+🎯 QUIZ FLOW (MANUAL)
+-------------------------------------
+1. Host clicks "Next Random Question"
+2. Question appears
+
+3. Host selects Team 1
+4. Clicks:
+   - "Correct" → add marks → End Question
+   - "Wrong" → subtract marks
+
+5. Host clicks "Start Attempt 2"
+6. Select Team 2
+
+7. Again:
+   - Correct → add marks
+   - Wrong → subtract marks
+
+8. Host clicks:
+   - "End Question" OR
+   - "Skip Question"
+
+-------------------------------------
+📌 IMPORTANT FLEXIBILITY
+-------------------------------------
+- Allow host to:
+   - Give marks manually
+   - Skip rules if needed
+   - Override anything
+
+- System should NOT restrict too much
+
+-------------------------------------
+📊 LEADERBOARD
+-------------------------------------
+- Real-time updates
+- Sorted by score
+- Highlight active team
+
+-------------------------------------
+📌 MANDATORY RULE CHECK (END)
+-------------------------------------
+At end:
+- Show which teams did NOT attempt:
+   - Section 1
+   - Section 2
+
+Just display warning (DO NOT auto penalize)
+
+-------------------------------------
+⚠️ EDGE CASE HANDLING
+-------------------------------------
+- Prevent duplicate question
+- Prevent accidental double scoring
+- Provide UNDO button
+- Allow correction of mistakes
+
+-------------------------------------
+💡 UI REQUIREMENTS
+-------------------------------------
+- Dark theme
+- Big fonts (projector friendly)
+- Clear buttons (large clickable)
+- Minimal clutter
+
+-------------------------------------
+📁 OUTPUT
+-------------------------------------
+- Full code (frontend + backend)
+- Setup steps
+- Sample dataset
+
+-------------------------------------
+IMPORTANT:
+This is a LIVE EVENT TOOL.
+
+Priority:
+1. Reliability
+2. Simplicity
+3. Manual control
+4. Speed
+
+Avoid:
+- Over-automation
+- Complex logic
+- Hidden behavior

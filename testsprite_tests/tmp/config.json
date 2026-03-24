@@ -1,0 +1,18 @@
+{
+  "status": "commited",
+  "type": "frontend",
+  "scope": "codebase",
+  "localEndpoint": "http://localhost:5173",
+  "executionArgs": {
+    "projectName": "quiz_team_app",
+    "projectPath": "c:\\Users\\HP\\Desktop\\quiz_team_app",
+    "testIds": [],
+    "additionalInstruction": "Run complete frontend tests and identify all functional bugs in setup, question flow, controls, scoring, end-game, and leaderboard behavior.",
+    "serverMode": "production",
+    "envs": {
+      "API_KEY": "sk-user-4Xe2_w167cAVyHKQ6sH9xUHB6txlUIYKIxG61OwLN9YuUJNQfqiTW0f2T--dv35UfS9p0YlcJ8vPgD1DcDiL5Og1eFMGyXIbrGd_PTh6Hhvlgmcq3uPnfOBAv2Bpe3c5PTQ"
+    }
+  },
+  "serverPort": 65199,
+  "proxy": "http://585038ec-9e91-43ff-beec-2327df76c0cb:kJ3Q04mCkceACJP7O80igequ4xDWfbkK@tun.testsprite.com:8080"
+}

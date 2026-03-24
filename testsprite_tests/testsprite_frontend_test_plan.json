@@ -1,0 +1,1712 @@
+[
+  {
+    "id": "TC001",
+    "title": "Launch game with valid unique team names initializes scores to zero",
+    "description": "Verifies the host can add teams with unique non-empty names and successfully launch the game with all scores shown as 0.",
+    "category": "Team Setup",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click on the control to add a team row"
+      },
+      {
+        "type": "action",
+        "description": "Click on the control to add a team row"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Team Alpha\" into the first team name field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Team Beta\" into the second team name field"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Launch Game\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Team Alpha\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"0\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC002",
+    "title": "Empty team name blocks launch with validation message",
+    "description": "Verifies launching is prevented when any team name is empty and the correct validation error is shown.",
+    "category": "Team Setup",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click on the control to add a team row"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Team Alpha\" into the first team name field"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Launch Game\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Team name cannot be empty\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Launch Game\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC003",
+    "title": "Duplicate team names block launch with uniqueness validation",
+    "description": "Verifies launching is prevented when two teams share the same name and the correct validation error is shown.",
+    "category": "Team Setup",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click on the control to add a team row"
+      },
+      {
+        "type": "action",
+        "description": "Click on the control to add a team row"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Team Alpha\" into the first team name field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Team Alpha\" into the second team name field"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Launch Game\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Team names must be unique\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Launch Game\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC004",
+    "title": "Adding teams beyond maximum is prevented and shows maximum reached message",
+    "description": "Verifies the UI enforces the maximum team limit and provides a visible message when the host tries to exceed it.",
+    "category": "Team Setup",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click on the control to add a team row repeatedly until the UI no longer adds new rows"
+      },
+      {
+        "type": "action",
+        "description": "Click on the control to add a team row one more time"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Maximum teams reached\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Launch Game\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC005",
+    "title": "Remove an optional team row and launch with remaining valid teams",
+    "description": "Verifies the host can remove a previously added team row and still launch successfully with remaining valid unique names.",
+    "category": "Team Setup",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click on the control to add a team row"
+      },
+      {
+        "type": "action",
+        "description": "Click on the control to add a team row"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Team Alpha\" into the first team name field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Team Beta\" into the second team name field"
+      },
+      {
+        "type": "action",
+        "description": "Click on the control to remove the second team row"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Launch Game\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Team Alpha\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC006",
+    "title": "Whitespace-only team name is treated as empty and blocks launch",
+    "description": "Verifies a team name consisting only of spaces triggers the empty-name validation and prevents game launch.",
+    "category": "Team Setup",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click on the control to add a team row"
+      },
+      {
+        "type": "action",
+        "description": "Type \"   \" into the first team name field"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Launch Game\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Team name cannot be empty\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Launch Game\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC007",
+    "title": "Fix duplicate names after validation and successfully launch",
+    "description": "Verifies the host can correct a duplicate-name validation error and then launch the game successfully.",
+    "category": "Team Setup",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click on the control to add a team row"
+      },
+      {
+        "type": "action",
+        "description": "Click on the control to add a team row"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Team Alpha\" into the first team name field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Team Alpha\" into the second team name field"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Launch Game\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Team names must be unique\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Team Beta\" into the second team name field"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Launch Game\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Team Beta\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC008",
+    "title": "Fix empty name after validation and successfully launch",
+    "description": "Verifies the host can correct an empty-name validation error and then launch the game successfully.",
+    "category": "Team Setup",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click on the control to add a team row"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Team Alpha\" into the first team name field"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Launch Game\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Team name cannot be empty\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Team Beta\" into the second team name field"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Launch Game\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Team Alpha\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC009",
+    "title": "End-to-end: draw question, reveal answer, run Attempt 1 correct, end question updates leaderboard",
+    "description": "Verifies the host can draw a random question, reveal answer/hints, score a team as correct in Attempt 1, and see the leaderboard reflect the added points after ending the question.",
+    "category": "Live Quiz Host Control",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to \"/\""
+      },
+      {
+        "type": "action",
+        "description": "Select a section from the section selector"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Next Random Question\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Question\" is visible in the center panel"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Reveal Answer\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Answer\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Select a team from the Team Control"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Start Attempt 1\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Correct\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"End Question\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Leaderboard\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC010",
+    "title": "Attempt 1 wrong applies penalty; Attempt 2 correct applies score; end question completes flow",
+    "description": "Verifies penalties and scoring can be applied across Attempt 1 (wrong) and Attempt 2 (correct) for different teams within the same question.",
+    "category": "Live Quiz Host Control",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to \"/\""
+      },
+      {
+        "type": "action",
+        "description": "Select a section from the section selector"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Next Random Question\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Question\" is visible in the center panel"
+      },
+      {
+        "type": "action",
+        "description": "Select a team from the Team Control"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Start Attempt 1\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Wrong\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Start Attempt 2\""
+      },
+      {
+        "type": "action",
+        "description": "Select another team from the Team Control"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Correct\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"End Question\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Leaderboard\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC011",
+    "title": "Rapid consecutive next-question clicks prevent duplicate question draw (duplicate prevented warning when applicable)",
+    "description": "Verifies clicking next question twice in quick succession does not show a duplicate question; if a duplicate draw is attempted, a visible warning is shown.",
+    "category": "Live Quiz Host Control",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to \"/\""
+      },
+      {
+        "type": "action",
+        "description": "Select a section from the section selector"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Next Random Question\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Question\" is visible in the center panel"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Next Random Question\" again immediately"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Question\" is visible in the center panel"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Duplicate question prevented\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC012",
+    "title": "Undo last scoring action reverses a just-applied mark",
+    "description": "Verifies the host can undo the last scoring action after marking a team correct, returning the visible score/leaderboard state to the pre-mark state.",
+    "category": "Live Quiz Host Control",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to \"/\""
+      },
+      {
+        "type": "action",
+        "description": "Select a section from the section selector"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Next Random Question\""
+      },
+      {
+        "type": "action",
+        "description": "Select a team from the Team Control"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Start Attempt 1\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Correct\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Undo\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Leaderboard\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC013",
+    "title": "Manual score adjustment applies and is reflected in visible leaderboard/score display",
+    "description": "Verifies the host can apply a manual score adjustment to a team and see the updated score reflected on screen.",
+    "category": "Live Quiz Host Control",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to \"/\""
+      },
+      {
+        "type": "action",
+        "description": "Select a team from the Team Control"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Manual Adjustment\""
+      },
+      {
+        "type": "action",
+        "description": "Type \"5\" into the manual score adjustment value field"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Apply\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Leaderboard\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC014",
+    "title": "Skip question moves to a different question without ending/scoring the current one",
+    "description": "Verifies the host can skip the current question and see a different question displayed afterward.",
+    "category": "Live Quiz Host Control",
+    "priority": "Low",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to \"/\""
+      },
+      {
+        "type": "action",
+        "description": "Select a section from the section selector"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Next Random Question\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Question\" is visible in the center panel"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Skip Question\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Question\" is visible in the center panel"
+      }
+    ]
+  },
+  {
+    "id": "TC015",
+    "title": "Leaderboard updates immediately after marking a team Correct",
+    "description": "Verifies that scoring a team as Correct updates the live leaderboard and reflects the new ordering by score.",
+    "category": "Dynamic Leaderboard and End-Game Results",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Leaderboard\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click on the control to mark a team as \"Correct\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the leaderboard list is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the score displayed for the affected team increases"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the leaderboard order is sorted with the highest score shown at the top"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the active team is visually highlighted in the leaderboard"
+      }
+    ]
+  },
+  {
+    "id": "TC016",
+    "title": "Leaderboard updates immediately after marking a team Wrong",
+    "description": "Verifies that scoring a team as Wrong updates the live leaderboard without incorrectly increasing that team's score.",
+    "category": "Dynamic Leaderboard and End-Game Results",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Leaderboard\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click on the control to mark a team as \"Wrong\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the leaderboard list is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the score displayed for the affected team does not increase"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the leaderboard order remains correctly sorted by score"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the active team is visually highlighted in the leaderboard"
+      }
+    ]
+  },
+  {
+    "id": "TC017",
+    "title": "Leaderboard remains sorted after multiple scoring actions across teams",
+    "description": "Verifies that after several scoring actions, the leaderboard remains correctly sorted by score and is stable/consistent.",
+    "category": "Dynamic Leaderboard and End-Game Results",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Leaderboard\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click on the control to mark a team as \"Correct\""
+      },
+      {
+        "type": "action",
+        "description": "Click on the control to mark a (different) team as \"Correct\""
+      },
+      {
+        "type": "action",
+        "description": "Click on the control to mark a team as \"Wrong\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the leaderboard order is sorted with the highest score shown at the top"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the leaderboard shows all teams currently in the game"
+      }
+    ]
+  },
+  {
+    "id": "TC018",
+    "title": "End Game shows final standings view",
+    "description": "Verifies that clicking End Game transitions the UI to a final standings/results display.",
+    "category": "Dynamic Leaderboard and End-Game Results",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"End Game\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"End Game\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Final Standings\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the final standings list is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the final standings are sorted with the highest score shown at the top"
+      }
+    ]
+  },
+  {
+    "id": "TC019",
+    "title": "End Game results include section-attempt warning list",
+    "description": "Verifies that after ending the game, the UI shows warnings for teams that did not attempt required sections (Section 1 and Section 2).",
+    "category": "Dynamic Leaderboard and End-Game Results",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"End Game\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Final Standings\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Section 1\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Section 2\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a warning list is visible showing teams that did not attempt Section 1"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a warning list is visible showing teams that did not attempt Section 2"
+      }
+    ]
+  },
+  {
+    "id": "TC020",
+    "title": "End Game is prevented when no teams are configured",
+    "description": "Verifies validation appears and End Game does not proceed when the game has no teams defined.",
+    "category": "Dynamic Leaderboard and End-Game Results",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"End Game\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Cannot end game: no teams configured\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Final Standings\" is not visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"End Game\" is still visible"
+      }
+    ]
+  },
+  {
+    "id": "TC021",
+    "title": "End Game is prevented when game state is empty",
+    "description": "Verifies validation appears and the app remains in the live game view if the game state is empty.",
+    "category": "Dynamic Leaderboard and End-Game Results",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"End Game\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"End Game\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Cannot end game: no teams configured\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the live leaderboard is still visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Final Standings\" is not visible"
+      }
+    ]
+  },
+  {
+    "id": "TC022",
+    "title": "Reset game is available from end-game results and returns to live state",
+    "description": "Verifies that after ending the game, the host can reset the game and return to the live gameplay view with the leaderboard visible.",
+    "category": "Dynamic Leaderboard and End-Game Results",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"End Game\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Final Standings\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click on the control labeled \"Reset\" or \"Reset Game\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Final Standings\" is not visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Leaderboard\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC023",
+    "title": "Draw a random question for a chosen section and reveal answer + hints",
+    "description": "Verifies the host can select a section, draw a non-repeating random question, and manually reveal its answer and hints.",
+    "category": "Question Management (Random, Non-Repeating)",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Next Random Question\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Select a section from the section selector"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Next Random Question\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a question is visible on the page"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a question ID is visible on the page"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Reveal Answer\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the answer is visible on the page"
+      }
+    ]
+  },
+  {
+    "id": "TC024",
+    "title": "Draw multiple random questions and verify question ID changes (non-repeating)",
+    "description": "Verifies consecutive draws for the same section show different question IDs, indicating no repeats.",
+    "category": "Question Management (Random, Non-Repeating)",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Select a section from the section selector"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Next Random Question\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a question ID is visible on the page"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Next Random Question\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a question is visible on the page"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the question ID is different than the previously shown question ID"
+      }
+    ]
+  },
+  {
+    "id": "TC025",
+    "title": "Duplicate prevention messaging when a repeated question would be returned",
+    "description": "Verifies the UI shows a duplicate-prevention notice and allows the host to request again.",
+    "category": "Question Management (Random, Non-Repeating)",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Select a section from the section selector"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Next Random Question\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a question ID is visible on the page"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Next Random Question\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Duplicate question prevented\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Next Random Question\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a question is visible on the page"
+      }
+    ]
+  },
+  {
+    "id": "TC026",
+    "title": "Reveal Answer control remains available after drawing a question",
+    "description": "Verifies that after a random question is displayed, the host can reveal the answer using the provided control.",
+    "category": "Question Management (Random, Non-Repeating)",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Select a section from the section selector"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Next Random Question\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Reveal Answer\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Reveal Answer\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the answer is visible on the page"
+      }
+    ]
+  },
+  {
+    "id": "TC027",
+    "title": "Switch sections and draw a question in the newly selected section",
+    "description": "Verifies section selection affects the random draw context and a question is displayed after switching sections.",
+    "category": "Question Management (Random, Non-Repeating)",
+    "priority": "Low",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Select a section from the section selector"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Next Random Question\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a question ID is visible on the page"
+      },
+      {
+        "type": "action",
+        "description": "Select a different section from the section selector"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Next Random Question\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a question is visible on the page"
+      }
+    ]
+  },
+  {
+    "id": "TC028",
+    "title": "Attempt 1 correct scoring applies and question can be ended",
+    "description": "Verifies that starting Attempt 1, scoring Correct adds points, and ending the question completes the lifecycle.",
+    "category": "Control Panel & Flow Control",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Select a team from the Team Control dropdown"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Start Attempt 1\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Correct\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"+40\" is visible OR verify text \"+60\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click \"End Question\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Question ended\" is visible OR verify text \"Next question\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC029",
+    "title": "Wrong penalty on Attempt 1 then correct scoring on Attempt 2 for another team",
+    "description": "Verifies wrong scoring applies a penalty, Attempt 2 can start, team can change, and correct scoring adds points before ending the question.",
+    "category": "Control Panel & Flow Control",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Select a team from the Team Control dropdown"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Start Attempt 1\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Wrong\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"-10\" is visible OR verify text \"-20\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Start Attempt 2\""
+      },
+      {
+        "type": "action",
+        "description": "Select a different team from the Team Control dropdown"
+      }
+    ]
+  },
+  {
+    "id": "TC030",
+    "title": "Attempt 2 correct scoring after switching teams",
+    "description": "Verifies that after Attempt 2 is started and a new team is selected, Correct adds points and the question can be ended.",
+    "category": "Control Panel & Flow Control",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Select a team from the Team Control dropdown"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Start Attempt 1\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Wrong\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Start Attempt 2\""
+      },
+      {
+        "type": "action",
+        "description": "Select a different team from the Team Control dropdown"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Correct\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"+40\" is visible OR verify text \"+60\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC031",
+    "title": "Prevent duplicate scoring on the same attempt and show warning",
+    "description": "Verifies the system blocks a second Correct click for the same attempt and displays an 'Already scored' warning.",
+    "category": "Control Panel & Flow Control",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Select a team from the Team Control dropdown"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Start Attempt 1\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Correct\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Correct\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Already scored for this attempt\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Undo Last Action\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC032",
+    "title": "Undo Last Action reverts an accidental scoring action",
+    "description": "Verifies that using Undo removes the most recent score change from the UI.",
+    "category": "Control Panel & Flow Control",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Select a team from the Team Control dropdown"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Start Attempt 1\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Correct\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"+40\" is visible OR verify text \"+60\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Undo Last Action\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"+40\" is not visible AND verify text \"+60\" is not visible"
+      }
+    ]
+  },
+  {
+    "id": "TC033",
+    "title": "Skip Question marks the question as skipped and returns control without scoring",
+    "description": "Verifies that skipping an active question records it as skipped and does not apply any score change.",
+    "category": "Control Panel & Flow Control",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Skip Question\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Skipped\" is visible OR verify text \"Question skipped\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"+40\" is not visible AND verify text \"+60\" is not visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"-10\" is not visible AND verify text \"-20\" is not visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Start Attempt 1\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC034",
+    "title": "Attempt controls are blocked until a team is selected",
+    "description": "Verifies the host cannot start an attempt without choosing a team first (guardrail against accidental scoring).",
+    "category": "Control Panel & Flow Control",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Start Attempt 1\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Start Attempt 1\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Select a team\" is visible OR verify text \"Please select a team\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Attempt 1 started\" is not visible"
+      },
+      {
+        "type": "action",
+        "description": "Select a team from the Team Control dropdown"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Start Attempt 1\""
+      }
+    ]
+  },
+  {
+    "id": "TC035",
+    "title": "End Question is blocked until an attempt is started or a question is active",
+    "description": "Verifies the app prevents ending a question when no active question/attempt exists and provides visible feedback.",
+    "category": "Control Panel & Flow Control",
+    "priority": "Low",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"End Question\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click \"End Question\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"No active question\" is visible OR verify text \"Nothing to end\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Select a team from the Team Control dropdown"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Start Attempt 1\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"End Question\""
+      }
+    ]
+  },
+  {
+    "id": "TC036",
+    "title": "Undo last scoring action updates leaderboard",
+    "description": "Verifies that undoing after at least one scoring action reverts the last change and updates the visible leaderboard.",
+    "category": "Manual Adjustments, Undo & Error Handling",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Leaderboard\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Score\" (or the primary scoring control for the current question/attempt)"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Undo Last Action\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Undo Last Action\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Leaderboard\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC037",
+    "title": "Manual score adjustment applies and is undoable",
+    "description": "Verifies that a manual adjustment changes the leaderboard and the change can be reverted using undo.",
+    "category": "Manual Adjustments, Undo & Error Handling",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Manual Score\" (or \"Manual Adjustment\")"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Manual\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Type \"5\" into the manual adjustment value field"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Apply\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Leaderboard\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Undo Last Action\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Leaderboard\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC038",
+    "title": "Recover from accidental double scoring via Undo",
+    "description": "Verifies that applying scoring twice can be corrected by undoing once, and the app remains stable with correct messaging/UI state.",
+    "category": "Manual Adjustments, Undo & Error Handling",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Score\" (or the primary scoring control for the current question/attempt)"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Score\" (or the same scoring control) again"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Undo Last Action\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Leaderboard\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Undo Last Action\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC039",
+    "title": "Invalid manual adjustment input shows a clear error and does not apply",
+    "description": "Verifies that non-numeric manual adjustment input is rejected with a visible message and does not change state.",
+    "category": "Manual Adjustments, Undo & Error Handling",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Manual Score\" (or \"Manual Adjustment\")"
+      },
+      {
+        "type": "action",
+        "description": "Type \"abc\" into the manual adjustment value field"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Apply\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Invalid\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Leaderboard\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC040",
+    "title": "Attempt to apply manual adjustment without a value shows required message",
+    "description": "Verifies that applying a manual adjustment with an empty value is blocked and a clear required/validation message is shown.",
+    "category": "Manual Adjustments, Undo & Error Handling",
+    "priority": "Low",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Manual Score\" (or \"Manual Adjustment\")"
+      },
+      {
+        "type": "action",
+        "description": "Click on the manual adjustment value field"
+      },
+      {
+        "type": "action",
+        "description": "Press \"Enter\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Apply\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"required\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Manual\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC041",
+    "title": "End Game shows final standings and non-attempt warnings for both sections",
+    "description": "Verifies that ending the game displays final sorted standings and informational warnings listing teams that did not attempt Section 1 and Section 2.",
+    "category": "End-of-Game Reporting & Warnings",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"End Game\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click \"End Game\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Final\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Standings\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Section 1\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Section 2\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"did not attempt\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC042",
+    "title": "End Game before any attempts shows all teams listed in warnings with no auto-penalty note",
+    "description": "Verifies that if the host ends the game before any Section 1 or Section 2 attempts, the warnings list all teams for the relevant sections and explicitly state no automatic penalties are applied.",
+    "category": "End-of-Game Reporting & Warnings",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"End Game\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click \"End Game\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Section 1\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Section 2\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"did not attempt\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"No auto-penalty\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC043",
+    "title": "Final standings are presented in a clearly sorted order at end of game",
+    "description": "Verifies that the final leaderboard indicates an ordered ranking (e.g., by rank position) rather than an unsorted list.",
+    "category": "End-of-Game Reporting & Warnings",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"End Game\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click \"End Game\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Final\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Standings\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Rank\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC044",
+    "title": "Warnings are informational only and explicitly state no penalties are applied",
+    "description": "Verifies the end-of-game warning copy is clearly informational and includes a visible statement that no automatic penalty is applied.",
+    "category": "End-of-Game Reporting & Warnings",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click \"End Game\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Warning\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"informational\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"No auto-penalty\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC045",
+    "title": "End Game view includes separate warnings for Section 1 and Section 2 (not a combined/ambiguous warning)",
+    "description": "Verifies that the UI distinguishes non-attempt reporting for Section 1 vs Section 2 with separate labels/sections.",
+    "category": "End-of-Game Reporting & Warnings",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click \"End Game\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Section 1\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"did not attempt\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Section 2\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"did not attempt\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC046",
+    "title": "End Game is resilient to rapid repeated clicks and still shows the same end-of-game report",
+    "description": "Verifies that quickly clicking End Game multiple times does not break the UI and the end-of-game report remains visible and stable.",
+    "category": "End-of-Game Reporting & Warnings",
+    "priority": "Low",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"End Game\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click \"End Game\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"End Game\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Final\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Standings\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"did not attempt\" is visible"
+      }
+    ]
+  }
+]
