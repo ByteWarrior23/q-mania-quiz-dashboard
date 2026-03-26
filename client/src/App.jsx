@@ -4,7 +4,7 @@ import { io } from 'socket.io-client'
 // ─── Constants ────────────────────────────────────────────────────────────────
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL || 'http://localhost:4000'
-const MAX_TEAMS  = 25   // hard cap, matches server/gameState.js
+const MAX_TEAMS  = 8   // hard cap, matches server/gameState.js
 
 const SECTION_META = {
   physics: { icon: '⚛',  label: 'Physics', color: '#00d4ff', scoreLabel: '+40 / −10' },
@@ -20,19 +20,6 @@ const TEAM_COLORS = [
   '#00d4ff', '#ff6b35', '#39ff14', '#ff2244',
   '#ffd700', '#a855f7', '#ec4899', '#10b981',
 ]
-
-const getTeamColor = (index) => {
-  if (TEAM_COLORS[index]) return TEAM_COLORS[index]
-  const hue = (index * 37) % 360
-  return `hsl(${hue}, 82%, 58%)`
-}
-
-const formatTeamName = (name, maxChars = 20) => {
-  if (!name || name.length <= maxChars) return name
-  const keepStart = Math.max(6, Math.floor((maxChars - 3) * 0.7))
-  const keepEnd = Math.max(3, maxChars - 3 - keepStart)
-  return `${name.slice(0, keepStart)}...${name.slice(-keepEnd)}`
-}
 
 // Stable uid generator for team rows in setup screen
 let _uid = 0
@@ -206,10 +193,7 @@ function TeamSetup({ onStart }) {
               <div key={team.uid} className="flex items-center gap-3">
                 <div
                   className="w-3 h-3 rounded-full flex-shrink-0"
-                  style={{
-                    backgroundColor: getTeamColor(i),
-                    boxShadow: `0 0 10px ${getTeamColor(i)}88`,
-                  }}
+                  style={{ backgroundColor: TEAM_COLORS[i], boxShadow: `0 0 10px ${TEAM_COLORS[i]}88` }}
                 />
                 <input
                   ref={el => { inputRefs.current[i] = el }}
@@ -485,8 +469,8 @@ function Dashboard({ gameState, emit }) {
           className="flex-col panel-border-l flex-shrink-0 overflow-y-auto"
           style={{
             display:  isDesktop || mobileTab === 'leaderboard' ? 'flex' : 'none',
-            width:    isDesktop ? (teams.length > 20 ? '420px' : teams.length > 16 ? '380px' : '320px') : '100%',
-            minWidth: isDesktop ? (teams.length > 20 ? '420px' : teams.length > 16 ? '380px' : '320px') : undefined,
+            width:    isDesktop ? '288px' : '100%',
+            minWidth: isDesktop ? '288px' : undefined,
           }}
         >
           <LeaderboardPanel teams={leaderboard} activeTeamId={activeTeamId} />
@@ -604,6 +588,83 @@ function SectionsPanel({
   )
 }
 
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// QUESTION TEXT RENDERER — handles plain + MCQ questions
+// ═══════════════════════════════════════════════════════════════════════════════
+
+/**
+ * Smart question renderer.
+ * If the question contains lines starting with (A) (B) ... (E) option markers,
+ * it renders the stem large and each option on its own styled row.
+ * Otherwise it renders as a plain large paragraph.
+ */
+function QuestionText({ text }) {
+  if (!text) return null
+
+  // Split on newline characters (JSON \n sequences)
+  const lines = text.split('\n').map(l => l.trim()).filter(Boolean)
+
+  const isOptionLine = (line) => /^\([A-Ea-e]\)/.test(line)
+
+  const stemLines  = lines.filter(l => !isOptionLine(l))
+  const optLines   = lines.filter(l => isOptionLine(l))
+
+  if (optLines.length === 0) {
+    // Plain question — big projector text
+    return (
+      <p className="font-body text-2xl md:text-3xl text-frost leading-relaxed font-semibold mb-4">
+        {text}
+      </p>
+    )
+  }
+
+  const stem = stemLines.join(' ').trim()
+
+  return (
+    <div className="mb-4">
+      {/* Question stem */}
+      <p className="font-body text-xl md:text-2xl text-frost leading-relaxed font-semibold mb-3">
+        {stem}
+      </p>
+
+      {/* MCQ options — one per row */}
+      <div className="space-y-2">
+        {optLines.map((opt, i) => {
+          const match  = opt.match(/^\(([A-Ea-e])\)\s*(.*)$/)
+          const letter = match ? match[1].toUpperCase() : String(i + 1)
+          const label  = match ? match[2].trim() : opt.trim()
+          return (
+            <div
+              key={i}
+              className="flex items-center gap-3 px-3 py-2 rounded-lg"
+              style={{
+                background: 'rgba(255,255,255,0.03)',
+                border: '1px solid rgba(255,255,255,0.07)',
+              }}
+            >
+              <span
+                className="font-display text-sm font-bold flex-shrink-0 flex items-center justify-center rounded"
+                style={{
+                  width: '28px', height: '28px', minWidth: '28px',
+                  background: 'rgba(0,212,255,0.12)',
+                  color: '#00d4ff',
+                  border: '1px solid rgba(0,212,255,0.35)',
+                }}
+              >
+                {letter}
+              </span>
+              <span className="font-body text-lg md:text-xl text-frost leading-snug">
+                {label}
+              </span>
+            </div>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
 // ═══════════════════════════════════════════════════════════════════════════════
 // QUESTION PANEL — center top
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -664,10 +725,8 @@ function QuestionPanel({
           </div>
         </div>
 
-        {/* Question text — large for projector */}
-        <p className="font-body text-2xl md:text-3xl text-frost leading-relaxed font-semibold mb-4">
-          {currentQuestion.question}
-        </p>
+        {/* Question text — large for projector, with MCQ option support */}
+        <QuestionText text={currentQuestion.question} />
 
         {/* Hint */}
         {currentQuestion.hint && (
@@ -977,7 +1036,6 @@ function TeamAttemptRow({ team, questionDone, onStartAttempt }) {
   const att2Done   = team.att2Scored
   const att1Result = team.att1Result
   const att2Result = team.att2Result
-  const shownName  = formatTeamName(team.name, 22)
 
   return (
     <div className="flex items-center gap-2 py-1.5 px-3 rounded-lg border border-white/5 hover:border-white/10 transition-colors">
@@ -993,7 +1051,7 @@ function TeamAttemptRow({ team, questionDone, onStartAttempt }) {
         style={{ color: team.color }}
         title={team.name}
       >
-        {shownName}
+        {team.name}
       </span>
       <span className="font-display text-sm text-ghost/60 flex-shrink-0 mr-1">
         {team.score}
@@ -1041,52 +1099,46 @@ function LeaderboardPanel({ teams, activeTeamId }) {
   const maxScore = scores.length ? Math.max(...scores) : 1
   const minFloor = Math.min(...scores, 0)
   const range    = Math.max(maxScore - minFloor, 1)
-  const isSparse  = teams.length > 0 && teams.length <= 8
-  const isCompact = teams.length > 10
-  const isDense   = teams.length > 16
-  const isUltraDense = teams.length > 20
 
   return (
-    <div className="p-3 flex flex-col h-full min-h-0">
+    <div className="p-4 flex flex-col h-full">
 
-      <div className="flex items-center gap-2 mb-3">
+      <div className="flex items-center gap-2 mb-4">
         <div className="w-1 h-4 bg-neon-gold rounded-full" style={{ boxShadow: '0 0 6px #ffd700' }} />
         <h3 className="font-display text-xs text-ghost tracking-widest">LIVE LEADERBOARD</h3>
-        <span className="font-mono text-[10px] text-ghost/60 ml-auto">{teams.length} teams</span>
       </div>
 
-      <div className={`flex-1 min-h-0 pr-1 ${isSparse ? 'flex flex-col gap-2' : isCompact ? 'overflow-y-auto grid gap-1.5 grid-cols-2 content-start' : 'overflow-y-auto space-y-2'}`}>
+      <div className="space-y-2 flex-1">
         {teams.map((team, i) => {
           const isActive = team.id === activeTeamId
           const barWidth = Math.max(0, ((team.score - minFloor) / range) * 100)
-          const shownName = formatTeamName(team.name, isUltraDense ? 24 : isDense ? 20 : isCompact ? 22 : 28)
 
           return (
             <div
               key={team.id}
-              className={`lb-item ${isActive ? 'active-team' : ''} ${isSparse ? 'flex-1 p-3' : ''} ${isDense ? 'p-2' : ''}`}
+              className={`lb-item ${isActive ? 'active-team' : ''}`}
               style={isActive ? { '--team-color': team.color } : {}}
             >
-              <div className={`flex items-center ${isDense ? 'gap-1.5' : 'gap-2'}`}>
-                <span className={`${isSparse ? 'text-lg w-8' : isDense ? 'text-sm w-4' : 'text-base w-6'} flex-shrink-0 text-center`}>
+              <div className="flex items-center gap-2">
+                <span className="text-base w-6 flex-shrink-0 text-center">
                   {i < 3
                     ? RANK_ICONS[i]
-                    : <span className="font-mono text-ghost/60 text-[10px]">{i + 1}</span>
+                    : <span className="font-mono text-ghost/60 text-xs">{i + 1}</span>
                   }
                 </span>
                 <div
-                  className={`${isDense ? 'w-2 h-2' : 'w-2.5 h-2.5'} rounded-full flex-shrink-0`}
+                  className="w-2.5 h-2.5 rounded-full flex-shrink-0"
                   style={{ backgroundColor: team.color, boxShadow: `0 0 6px ${team.color}88` }}
                 />
                 <span
-                  className={`font-mono ${isSparse ? 'text-base' : isUltraDense ? 'text-sm' : isDense ? 'text-xs' : 'text-sm'} flex-1 truncate min-w-0`}
+                  className="font-mono text-sm flex-1 truncate"
                   style={{ color: isActive ? team.color : undefined }}
                   title={team.name}
                 >
-                  {shownName}
+                  {team.name}
                 </span>
                 <span
-                  className={`font-display ${isSparse ? 'text-2xl' : isUltraDense ? 'text-base' : isDense ? 'text-sm' : 'text-lg'} flex-shrink-0 ${isActive ? 'animate-score-pop' : ''}`}
+                  className={`font-display text-lg flex-shrink-0 ${isActive ? 'animate-score-pop' : ''}`}
                   style={{
                     color: team.color,
                     textShadow: isActive ? `0 0 12px ${team.color}` : undefined,
@@ -1096,30 +1148,28 @@ function LeaderboardPanel({ teams, activeTeamId }) {
                 </span>
               </div>
 
-              {!isDense && (
-                <div className="score-bar">
-                  <div
-                    className="score-bar-fill"
-                    style={{
-                      width:           `${barWidth}%`,
-                      backgroundColor: team.color,
-                      boxShadow:       `0 0 6px ${team.color}88`,
-                    }}
-                  />
-                </div>
-              )}
+              <div className="score-bar">
+                <div
+                  className="score-bar-fill"
+                  style={{
+                    width:           `${barWidth}%`,
+                    backgroundColor: team.color,
+                    boxShadow:       `0 0 6px ${team.color}88`,
+                  }}
+                />
+              </div>
             </div>
           )
         })}
       </div>
 
       {/* Summary footer */}
-      {teams.length > 0 && !isDense && (
+      {teams.length > 0 && (
         <div className="mt-4 pt-4 panel-border-t grid grid-cols-2 gap-2">
           <div className="card-sm p-2.5 text-center">
             <div className="font-mono text-ghost text-xs mb-1">LEADER</div>
             <div className="font-body text-sm font-semibold truncate" style={{ color: teams[0]?.color }} title={teams[0]?.name}>
-                {formatTeamName(teams[0]?.name, 28) ?? '—'}
+              {teams[0]?.name ?? '—'}
             </div>
           </div>
           <div className="card-sm p-2.5 text-center">
@@ -1172,13 +1222,12 @@ function EndGameScreen({ gameState, onReset }) {
         {/* Winner badge */}
         {winner && (
           <div
-            className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full border max-w-full"
+            className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full border"
             style={{ borderColor: `${winner.color}50`, background: `${winner.color}12` }}
           >
             <span className="text-2xl">🥇</span>
             <span
-              className="font-display text-lg md:text-xl truncate max-w-[52vw] md:max-w-[34rem]"
-              title={winner.name}
+              className="font-display text-lg md:text-xl"
               style={{ color: winner.color, textShadow: `0 0 16px ${winner.color}` }}
             >
               {winner.name}
@@ -1188,7 +1237,7 @@ function EndGameScreen({ gameState, onReset }) {
         )}
       </div>
 
-      <div className="w-full max-w-4xl relative z-10 space-y-4 mb-8">
+      <div className="w-full max-w-2xl relative z-10 space-y-4 mb-8">
 
         {/* ── Full final leaderboard ── */}
         <div className="card p-5 md:p-6">
@@ -1197,11 +1246,10 @@ function EndGameScreen({ gameState, onReset }) {
             <h2 className="font-display text-sm tracking-widest text-ghost">FINAL STANDINGS</h2>
           </div>
 
-          <div className="space-y-3 max-h-[68vh] overflow-y-auto pr-1">
+          <div className="space-y-3">
             {leaderboard.map((team, i) => {
               const barWidth = Math.max(0, ((team.score - minFloor) / range) * 100)
               const isFirst  = i === 0
-              const shownName = formatTeamName(team.name, leaderboard.length > 20 ? 42 : 52)
 
               return (
                 <div
@@ -1226,11 +1274,11 @@ function EndGameScreen({ gameState, onReset }) {
                     />
                     {/* Name */}
                     <span
-                      className="font-body text-lg md:text-xl flex-1 min-w-0 font-semibold truncate"
+                      className="font-body text-lg md:text-xl flex-1 font-semibold truncate"
                       style={{ color: isFirst ? team.color : undefined }}
                       title={team.name}
                     >
-                      {shownName}
+                      {team.name}
                     </span>
                     {/* Score */}
                     <span

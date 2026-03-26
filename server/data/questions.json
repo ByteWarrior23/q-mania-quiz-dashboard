@@ -68,61 +68,306 @@
       "marks": 40,
       "hint": "The colour depends on the alignment of the crystal."
     },
-    {
-      "question": "Which spaceship can make the Kessel Run in less than 12 parsecs?",
-      "answer": "The Millennium Falcon",
-      "marks": 40,
-      "hint": "Owned by a certain smuggler-turned-hero."
-    },
-    {
-      "question": "In the Dune universe, what substance grants limited prescience and enables space travel?",
-      "answer": "Spice (Melange)",
-      "marks": 40,
-      "hint": "Only found on the desert planet Arrakis."
-    },
-    {
-      "question": "What was the name of the AI computer in 2001: A Space Odyssey?",
-      "answer": "HAL 9000",
-      "marks": 40,
-      "hint": "Famous for: 'I'm sorry Dave, I can't do that.'"
-    },
-    {
-      "question": "In The Hitchhiker's Guide to the Galaxy, what is the answer to life, the universe, and everything?",
-      "answer": "42",
-      "marks": 40,
-      "hint": "The question itself was unknown for millions of years."
-    },
-    {
-      "question": "What technology allows ships to travel faster than light in Star Trek?",
-      "answer": "Warp drive (powered by matter-antimatter annihilation)",
-      "marks": 40,
-      "hint": "Speed is measured in warp factors."
-    },
-    {
-      "question": "What is the First Law of Robotics in Isaac Asimov's fiction?",
-      "answer": "A robot may not injure a human being or, through inaction, allow a human being to come to harm.",
-      "marks": 40,
-      "hint": "There are three laws; this one takes the highest priority."
-    },
-    {
-      "question": "In the Matrix trilogy, what colour pill lets Neo see the truth?",
-      "answer": "The red pill",
-      "marks": 40,
-      "hint": "The blue pill would have kept him in blissful ignorance."
-    },
-    {
-      "question": "What fictional metal is Captain America's shield made from?",
-      "answer": "Vibranium",
-      "marks": 40,
-      "hint": "It also originates from the African nation of Wakanda."
-    },
-    {
-      "question": "Name the supercomputer that beat world chess champion Garry Kasparov in 1997.",
-      "answer": "Deep Blue (built by IBM)",
-      "marks": 40,
-      "hint": "This real event inspired many sci-fi AI storylines."
-    }
-  ],
+        {
+          "question": "In 'Interstellar', the 'Slingshot' maneuver around a black hole is a real orbital mechanic. To gain velocity without using fuel, what property of the massive body is the spacecraft 'stealing'?\n(A) Angular Momentum\n(B) Thermal Radiation\n(C) Magnetic Flux\n(D) Hawking Radiation\n(E) Atomic Mass",
+          "answer": "Angular Momentum",
+          "marks": 40
+        },
+    
+        {
+          "question": "In 'Ant-Man', the 'Quantum Realm' depicts a 'Probability Cloud'. In the Schrodinger Equation, what does the square of the wavefunction ($|\\psi|^2$) represent?\n(A) The exact velocity of Scott Lang\n(B) The probability density of finding a particle in a specific location\n(C) The total energy of the suit\n(D) The rate of time dilation\n(E) The temperature of the subatomic space",
+          "answer": "The probability density of finding a particle in a specific location",
+          "marks": 40
+        },
+    
+        {
+          "question": "In 'The Marvels', heroes swap places instantaneously. If this were 'Quantum Teleportation', what must be exchanged between the two locations first to allow the transfer of the quantum state?\n(A) A stream of liquid nitrogen\n(B) A classical bit of information and a pre-entangled pair\n(C) A high-intensity laser beam\n(D) A gravitational wave\n(E) A magnetic monopole",
+          "answer": "A classical bit of information and a pre-entangled pair",
+          "marks": 40
+        },
+    
+        {
+          "question": "In 'Inception', the 'Penrose Stairs' represent an impossible object. In topology, if a dream architect creates a surface with only one side and one edge, they have constructed a:\n(A) Klein Bottle\n(B) Mobius Strip\n(C) Euclidean Plane\n(D) Hyperbolic Paraboloid\n(E) Riemann Surface",
+          "answer": "Mobius Strip",
+          "marks": 40
+        },
+    
+        {
+          "question": "In 'Arrival', the Heptapods' ship defies 'Aerodynamic Lift'. If the ship stays aloft without moving air, it is likely generating a field that cancels which fundamental force carrier?\n(A) Gluon\n(B) Photon\n(C) Graviton\n(D) W-Boson\n(E) Z-Boson",
+          "answer": "Graviton",
+          "marks": 40
+        },
+    
+        {
+          "question": "In 'The Matrix', the 'Simulation Hypothesis' suggests reality is mathematical. If the universe has a minimum possible length (like a pixel), it refers to the:\n(A) Hubble Length\n(B) Planck Length\n(C) Fermi Constant\n(D) Bohr Radius\n(E) Schwarzschild Radius",
+          "answer": "Planck Length",
+          "marks": 40
+        },
+    
+        {
+          "question": "In 'The Martian', Watney uses 'Electrolysis' to produce Oxygen. This process involves using electricity to break the chemical bonds of which molecule?\n(A) Carbon Dioxide\n(B) Methane\n(C) Water ($H_2O$)\n(D) Ammonia\n(E) Nitrogen",
+          "answer": "Water ($H_2O$)",
+          "marks": 40
+        },
+    
+        {
+          "question": "In 'Interstellar', 'Spaghettification' occurs near the singularity. This effect is caused by 'Tidal Forces,' which represent the difference in:\n(A) Atmospheric pressure between head and feet\n(B) Gravitational pull between two points on an object\n(C) Light speed in a vacuum\n(D) Magnetic polarity\n(E) Time flow in different galaxies",
+          "answer": "Gravitational pull between two points on an object",
+          "marks": 40
+        },
+    
+        {
+          "question": "In 'Ant-Man', 'Quantum Tunneling' allows particles to pass through barriers. This happens because a particle's wavefunction:\n(A) Turns into a solid\n(B) Has a non-zero probability of existing on the other side of the barrier\n(C) Moves faster than light\n(D) Becomes a wave of sound\n(E) Shrinks to zero mass",
+          "answer": "Has a non-zero probability of existing on the other side of the barrier",
+          "marks": 40
+        },
+    
+        {
+          "question": "In 'The Marvels', the 'Singularity' created by the bracelets is a 'Kerr Black Hole'. Unlike a standard black hole, a Kerr black hole possesses:\n(A) Electric charge only\n(B) Angular momentum (Spin)\n(C) No event horizon\n(D) Infinite life span\n(E) A square shape",
+          "answer": "Angular momentum (Spin)",
+          "marks": 40
+        },
+    
+        {
+          "question": "In 'Interstellar', the 'Causal Loop' involves Cooper sending data to his past self. This is theoretically possible via a 'Closed Timelike Curve' (CTC). Which theory of physics allows for the existence of CTCs?\n(A) Special Relativity\n(B) General Relativity\n(C) Quantum Chromodynamics\n(D) Fluid Dynamics\n(E) Thermodynamics",
+          "answer": "General Relativity",
+          "marks": 40
+        },
+    
+        {
+          "question": "In 'Arrival', the aliens' propulsion involves 'Inertial Mass Manipulation'. If you reduce an object's inertial mass to zero, how much force is required to accelerate it to the speed of light?\n(A) Infinite Force\n(B) Zero Force\n(C) 100 Newtons\n(D) Force equal to its weight\n(E) It cannot be accelerated",
+          "answer": "Zero Force",
+          "marks": 40
+        },
+    
+        {
+          "question": "In 'The Matrix', the 'Bullet Time' effect mimics 'Relativistic Doppler Shift'. If Neo moves toward a blue light at near-light speed, the frequency he perceives will:\n(A) Increase further into the ultraviolet\n(B) Decrease into the red\n(C) Stay the same\n(D) Turn into a sound wave\n(E) Vanish completely",
+          "answer": "Increase further into the ultraviolet",
+          "marks": 40
+        },
+    
+        {
+          "question": "In 'Ant-Man', Scott is warned about 'Quantum Entanglement' with Janet. If two particles are entangled, measuring the spin of one 'instantly' determines the other. This phenomenon was famously called 'Spooky action at a distance' by:\n(A) Richard Feynman\n(B) Albert Einstein\n(C) Niels Bohr\n(D) Stephen Hawking\n(E) Werner Heisenberg",
+          "answer": "Albert Einstein",
+          "marks": 40
+        },
+    
+        {
+          "question": "In 'The Martian', to survive the vacuum of space during the final rescue, Watney punctures his suit. This uses the 'Conservation of Momentum'. If he ejects gas in one direction, his body moves:\n(A) In the same direction\n(B) In the opposite direction\n(C) Upward only\n(D) It doesn't move\n(E) He starts spinning in place",
+          "answer": "In the opposite direction",
+          "marks": 40
+        },
+    
+        {
+          "question": "In 'Interstellar', an observer on the Endurance watches a clock on Miller's Planet. If the planet clock appears to tick once every 7 years, what specific shift in the electromagnetic spectrum would the light from that clock exhibit?\n(A) A massive displacement toward shorter wavelengths\n(B) A compression of the wave period\n(C) A significant redshift toward the infrared or radio spectrum\n(D) A complete inversion of the photon's spin\n(E) No spectral shift, only a change in brightness",
+          "answer": "A significant redshift toward the infrared or radio spectrum",
+          "marks": 40
+        },
+    
+        {
+          "question": "In 'Arrival', the Heptapods' perception of 'Simultaneity' implies that the universe is a fixed 4D construct. If this is true, which concept of classical mechanics becomes an observer-dependent illusion?\n(A) Mass\n(B) Momentum\n(C) The Arrow of Entropy\n(D) Electric Charge\n(E) Angular Velocity",
+          "answer": "The Arrow of Entropy",
+          "marks": 40
+        },
+    
+        {
+          "question": "Ant-Man shrinks to 10 nanometers but retains his 80kg mass. Given that the 'Strong Nuclear Force' has a range of approximately 1 femtometer, what would happen if he accidentally compressed his own atoms further into that range?\n(A) He would become a liquid\n(B) He would trigger a localized runaway fusion event\n(C) He would lose all electrical charge\n(D) He would drift away due to solar winds\n(E) His density would drop to zero",
+          "answer": "He would trigger a localized runaway fusion event",
+          "marks": 40
+        },
+    
+        {
+          "question": "In 'Inception', the 'kick' utilizes the vestibular system's reaction to gravity. If a dreamer is in a state of freefall in reality, why does the dream world lose its consistent 'down' vector?\n(A) The dreamer's brain stops producing dopamine\n(B) The lack of a normal force on the body removes the reference point for perceived gravity\n(C) The subconscious mind cannot process acceleration\n(D) Dreams only exist in zero-G\n(E) Friction increases to infinity",
+          "answer": "The lack of a normal force on the body removes the reference point for perceived gravity",
+          "marks": 40
+        },
+    
+        {
+          "question": "In 'The Matrix', the machines harvest heat from humans. Based on the Carnot Efficiency limit, why is using a biological organism as a primary thermal power source fundamentally flawed?\n(A) Humans are too cold to create a high-temperature gradient\n(B) Humans produce AC current\n(C) Biological tissue is a perfect insulator\n(D) The 'waste' heat is actually recycled into thoughts\n(E) Machines prefer solar energy anyway",
+          "answer": "Humans are too cold to create a high-temperature gradient",
+          "marks": 40
+        },
+    
+        {
+          "question": "In 'The Martian', Watney uses Hydrazine ($N_2H_4$) to produce water. If he accidentally allowed the pure Hydrogen to mix with the Habitat's Oxygen without a controlled spark, what is the most likely outcome?\n(A) The room would fill with breathable steam\n(B) An immediate, high-velocity combustion or explosion\n(C) The creation of liquid Nitrogen\n(D) The internal pressure would drop to zero\n(E) The potatoes would grow 10x faster",
+          "answer": "An immediate, high-velocity combustion or explosion",
+          "marks": 40
+        },
+    
+        {
+          "question": "In 'The Marvels', the 'Entanglement' swap is instantaneous. If this follows the 'No-Communication Theorem' of real physics, why is it impossible to send a text message using this method?\n(A) The speed of light is too slow\n(B) Quantum states are random and cannot be 'steered' to carry specific data\n(C) The heroes don't have phones\n(D) Space-time is too thick\n(E) Gravity blocks the signal",
+          "answer": "Quantum states are random and cannot be 'steered' to carry specific data",
+          "marks": 40
+        },
+    
+        {
+          "question": "If Ant-Man maintains his mass but shrinks to the size of a tardigrade, he would likely suffocate even with an oxygen tank. Why?\n(A) The air molecules are too large to fit in his nose\n(B) His metabolism would accelerate so much he would burn through his O2 in seconds\n(C) Surface tension would seal his mouth shut\n(D) The tank would become too heavy to lift\n(E) Nitrogen becomes toxic at small scales",
+          "answer": "His metabolism would accelerate so much he would burn through his O2 in seconds",
+          "marks": 40
+        },
+    
+        {
+          "question": "In 'Interstellar', the Tesseract represents a 5th-dimensional 'Bulk'. If a 5D being observes a 4D human timeline, how would a person's life appear to them?\n(A) As a single, solid, winding physical filament or 'worm' through space\n(B) As a series of flickering lights\n(C) As a 2D photograph\n(D) As a sphere of water\n(E) As a sound wave",
+          "answer": "As a single, solid, winding physical filament or 'worm' through space",
+          "marks": 40
+        },
+    
+        {
+          "question": "In 'Arrival', the Heptapod logograms are 'Semasiographic'. Unlike human alphabets, what does this imply about the relationship between the written symbol and the spoken sound?\n(A) The symbol and sound are perfectly linked\n(B) There is no inherent link; the symbol represents a concept directly\n(C) The sound is higher pitch than the symbol\n(D) The symbols can only be read in the dark\n(E) Only machines can read them",
+          "answer": "There is no inherent link; the symbol represents a concept directly",
+          "marks": 40
+        },
+    
+        {
+          "question": "In 'The Matrix', Neo learns skills via direct brain upload. The specialized cells that transmit these electrical signals are:\n(A) Arteries\n(B) Neurons\n(C) Platelets\n(D) Hormones\n(E) T-cells",
+          "answer": "Neurons",
+          "marks": 40
+        },
+    
+        {
+          "question": "In 'The Marvels', a wormhole 'folds' space. To fold a 3D space, you must mathematically move through a:\n(A) 2D plane\n(B) 3D box\n(C) 4D Bulk/Hyper-dimension\n(D) Vacuum\n(E) Magnet",
+          "answer": "4D Bulk/Hyper-dimension",
+          "marks": 40
+        },
+    
+        {
+          "question": "In 'Inception', recursion is shown via infinite loop architecture. This is a 3D representation of:\n(A) Addition\n(B) Self-reference/Looping\n(C) Subtraction\n(D) Prime numbers\n(E) Geometry",
+          "answer": "Self-reference/Looping",
+          "marks": 40
+        },
+    
+        {
+          "question": "In 'Arrival', sound travels through a denser atmosphere. Compared to Earth's air, sound waves move:\n(A) Slower\n(B) Faster\n(C) At the same speed\n(D) Backwards\n(E) Not at all",
+          "answer": "Faster",
+          "marks": 40
+        },
+    
+        {
+          "question": "In 'Interstellar', a 'Singularity' at the center of a black hole is a theoretical point of:\n(A) Infinite Volume\n(B) Infinite Density\n(C) Zero Mass\n(D) Absolute Zero\n(E) Infinite Light",
+          "answer": "Infinite Density",
+          "marks": 40
+        },
+    
+        {
+          "question": "In 'The Martian', Watney must wash Martian soil to remove which toxic substance before planting?\n(A) Dust\n(B) Perchlorates\n(C) Gold\n(D) Oxygen\n(E) Ice",
+          "answer": "Perchlorates",
+          "marks": 40
+        },
+    
+        {
+          "question": "In 'Ant-Man', subatomic particles like Quarks are held together by which fundamental force?\n(A) Gravity\n(B) Strong Nuclear Force\n(C) Weak Nuclear Force\n(D) Magnetism\n(E) Friction",
+          "answer": "Strong Nuclear Force",
+          "marks": 40
+        },
+    
+        {
+          "question": "In 'The Matrix', the 'Allegory of the Cave' philosophy suggests that:\n(A) Reality is a cave\n(B) Most people perceive shadows as reality\n(C) Fighting dragons is easy\n(D) Coding is fun\n(E) Computers are the sun",
+          "answer": "Most people perceive shadows as reality",
+          "marks": 40
+        },
+    
+        {
+          "question": "In 'The Marvels', when Monica phases through a solid wall, she is mimicking the quantum phenomenon of:\n(A) Tunneling\n(B) Entanglement\n(C) Decoupling\n(D) Fusion\n(E) Fission",
+          "answer": "Tunneling",
+          "marks": 40
+        },
+    
+        {
+          "question": "In 'Interstellar', TARS has an 'Honesty' setting to make him more human-like. This refers to the ability to pass the:\n(A) Blood test\n(B) Turing Test\n(C) Vision test\n(D) Stress test\n(E) IQ test",
+          "answer": "Turing Test",
+          "marks": 40
+        },
+    
+        {
+          "question": "In 'Interstellar', if Miller's Planet transmits a light signal every 7 Earth years, what specific shift in frequency occurs for the observer?\n(A) Blueshift\n(B) Gravitational Redshift\n(C) Total Reflection\n(D) Phase Inversion\n(E) No Shift",
+          "answer": "Gravitational Redshift",
+          "marks": 40
+        },
+    
+        {
+          "question": "In 'Arrival', Louise is a 'Non-causal' agent because she knows the future. This concept challenges the:\n(A) First Law of Motion\n(B) Second Law of Thermodynamics\n(C) Ideal Gas Law\n(D) Law of Reflection\n(E) Static Equilibrium",
+          "answer": "Second Law of Thermodynamics",
+          "marks": 40
+        },
+    
+        {
+          "question": "Ant-Man shrinks to 10 nanometers, smaller than the wavelength of visible light. To a human observer, he would appear:\n(A) Bright red\n(B) Invisible/Black\n(C) Transparent\n(D) Glowing blue\n(E) Giant",
+          "answer": "Invisible/Black",
+          "marks": 40
+        },
+    
+        {
+          "question": "In 'Inception', if time dilation is 1:20 per dream level, how much real-time passes during 10 years in the 4th level?\n(A) 1 hour\n(B) 2.25 seconds\n(C) 1 minute\n(D) 1 day\n(E) 5 hours",
+          "answer": "2.25 seconds",
+          "marks": 40
+        },
+    
+        {
+          "question": "In 'The Matrix', if humans were truly used for energy, the system would fail because they consume more energy than they produce. This is a violation of:\n(A) Ohm’s Law\n(B) Thermal Efficiency\n(C) Gravity\n(D) Sound speed\n(E) Magnetic flux",
+          "answer": "Thermal Efficiency",
+          "marks": 40
+        },
+    
+        {
+          "question": "In 'The Marvels', swap speeds are determined by momentum. If a 60kg hero swaps with an 80kg hero at 10m/s, for momentum to be conserved, the new velocity must:\n(A) Increase\n(B) Decrease\n(C) Stay the same\n(D) Stop completely\n(E) Reverse",
+          "answer": "Decrease",
+          "marks": 40
+        },
+    
+        {
+          "question": "In 'Interstellar', a Tesseract is a 4D hypercube. If a 3D sphere looks like a growing circle in 2D, what does a 4D sphere look like in 3D?\n(A) A static cube\n(B) A sphere that grows and then shrinks\n(C) A flat line\n(D) A pyramid\n(E) A point",
+          "answer": "A sphere that grows and then shrinks",
+          "marks": 40
+        },
+    
+        {
+          "question": "In 'The Martian', Watney burns hydrazine for water. Where does the Hydrogen for the reaction come from?\n(A) Martian atmosphere\n(B) The chemical bonds of the fuel\n(C) The soil\n(D) His breath\n(E) The potatoes",
+          "answer": "The chemical bonds of the fuel",
+          "marks": 40
+        },
+    
+        {
+          "question": "In 'Arrival', aliens use 'Non-zero-sum' logic. In game theory, this implies:\n(A) Total loss\n(B) Mutual benefit is possible\n(C) Only one winner\n(D) No game\n(E) Infinite points",
+          "answer": "Mutual benefit is possible",
+          "marks": 40
+        },
+    
+        {
+          "question": "In 'Interstellar', binary code (0 and 1) is transmitted. What is the decimal value of the binary string 1011?\n(A) 5\n(B) 10\n(C) 11\n(D) 13\n(E) 15",
+          "answer": "11",
+          "marks": 40
+        },
+    
+        {
+          "question": "In 'The Matrix', the 'Oracle' can see the future of the simulation. If the simulation is 'Deterministic,' it means that:\n(A) Every event is determined by preceding causes and laws\n(B) Everything happens by random chance\n(C) Humans have total free will\n(D) The machines have no power\n(E) The code is always broken",
+          "answer": "Every event is determined by preceding causes and laws",
+          "marks": 40
+        },
+    
+        {
+          "question": "In 'The Marvels', the heroes switch by 'Quantum Entanglement'. If one hero's state is 'Up', the entangled hero's state must be:\n(A) Also Up\n(B) Down\n(C) Left\n(D) Right\n(E) It remains unknown",
+          "answer": "Down",
+          "marks": 40
+        },
+    
+        {
+          "question": "In 'Inception', Cobb uses a spinning top. If the top experiences 'Precession,' it is a result of:\n(A) Gravity and Angular Momentum\n(B) Air resistance only\n(C) The dreamer's fear\n(D) Light reflecting off the surface\n(E) Magnetic fields",
+          "answer": "Gravity and Angular Momentum",
+          "marks": 40
+        },
+    
+        {
+          "question": "In 'Ant-Man', the 'Wasp' uses bio-electric stings. This process of generating electricity within a living organism is known as:\n(A) Piezoelectricity\n(B) Electroluminescence\n(C) Bioelectrogenesis\n(D) Thermoelectricity\n(E) Photovoltaics",
+          "answer": "Bioelectrogenesis",
+          "marks": 40
+        },
+    
+        {
+          "question": "In 'The Martian', the 'Gravity Assist' to return to Mars uses the Earth's orbital velocity. This is an application of:\n(A) Newton's First Law\n(B) Hooke's Law\n(C) The Work-Energy Theorem\n(D) Snell's Law\n(E) Bernoulli's Principle",
+          "answer": "The Work-Energy Theorem",
+          "marks": 40
+        }
+      ],
   "puzzles": [
     {
       "question": "I speak without a mouth and hear without ears. I have no body, but I come alive with wind. What am I?",
