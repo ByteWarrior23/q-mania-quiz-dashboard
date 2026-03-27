@@ -1,65 +1,205 @@
 {
   "physics": [
     {
-      "question": "What is the approximate speed of light in a vacuum?",
-      "answer": "3 × 10⁸ metres per second (300,000 km/s)",
-      "marks": 40,
-      "hint": "It takes about 8 minutes to travel from the Sun to Earth."
+      "question": "A photon cannot exist at rest and always travels at the same speed in all inertial frames. What fundamental principle enforces this behavior?",
+      "answer": "Relativity principle",
+      "marks": 40
     },
     {
-      "question": "What fundamental force holds the nucleus of an atom together?",
-      "answer": "The strong nuclear force",
-      "marks": 40,
-      "hint": "It is the strongest of the four fundamental forces."
+      "question": "Even at absolute zero temperature, particles still possess non-zero energy due to confinement. What is this minimum energy called?",
+      "answer": "Zero point energy",
+      "marks": 40
     },
     {
-      "question": "State Newton's Second Law of Motion.",
-      "answer": "Force = mass × acceleration (F = ma)",
-      "marks": 40,
-      "hint": "It relates net force, mass, and how an object accelerates."
+      "question": "A particle confined in a one-dimensional box cannot have zero energy even in its lowest state. What constraint causes this?",
+      "answer": "Boundary conditions",
+      "marks": 40
     },
     {
-      "question": "What is the SI unit of electrical resistance?",
-      "answer": "Ohm (Ω)",
-      "marks": 40,
-      "hint": "Named after German physicist Georg Simon ___."
+      "question": "In quantum mechanics, why can probability densities interfere even when individual particles are detected one at a time?",
+      "answer": "Wavefunction interference",
+      "marks": 40
     },
     {
-      "question": "What phenomenon causes light to bend when passing from one medium to another?",
-      "answer": "Refraction",
-      "marks": 40,
-      "hint": "This is why a straw appears bent in a glass of water."
+      "question": "A uniformly accelerated observer detects thermal radiation in vacuum, whereas an inertial observer detects none. What phenomenon explains this?",
+      "answer": "Unruh effect",
+      "marks": 40
     },
     {
-      "question": "What does Einstein's equation E = mc² describe?",
-      "answer": "Energy equals mass times the speed of light squared — mass and energy are equivalent and interconvertible.",
-      "marks": 40,
-      "hint": "Proposed in the special theory of relativity."
+      "question": "Black holes emit radiation due to quantum effects near the event horizon. What is this radiation called?",
+      "answer": "Hawking radiation",
+      "marks": 40
     },
     {
-      "question": "What temperature is absolute zero in Celsius?",
-      "answer": "−273.15°C (or 0 Kelvin)",
-      "marks": 40,
-      "hint": "No temperature lower than this is theoretically possible."
+      "question": "A system evolves deterministically according to Schrödinger equation but appears probabilistic upon measurement. What causes this transition?",
+      "answer": "Measurement problem",
+      "marks": 40
     },
     {
-      "question": "What is the name of the quantum of light?",
-      "answer": "Photon",
-      "marks": 40,
-      "hint": "A massless particle that travels at the speed of light."
+      "question": "In superconductors, electrical resistance drops to zero below a critical temperature due to paired electrons. What are these pairs called?",
+      "answer": "Cooper pairs",
+      "marks": 40
     },
     {
-      "question": "What is Ohm's Law?",
-      "answer": "Voltage = Current × Resistance (V = IR)",
-      "marks": 40,
-      "hint": "Relates voltage, current, and resistance in a circuit."
+      "question": "Why does increasing temperature eventually destroy superconductivity despite increasing thermal energy?",
+      "answer": "Pair breaking",
+      "marks": 40
     },
     {
-      "question": "What is the half-life of Carbon-14?",
-      "answer": "Approximately 5,730 years",
-      "marks": 40,
-      "hint": "Used in radiocarbon dating of organic materials."
-    }
+      "question": "In relativistic mechanics, mass appears to increase with velocity approaching light speed. What underlying factor causes this resistance to acceleration?",
+      "answer": "Relativistic momentum",
+      "marks": 40
+    },
+    {
+      "question": "A particle moving faster than light in a medium emits a characteristic radiation due to breaking phase velocity limits. What is this radiation?",
+      "answer": "Cherenkov radiation",
+      "marks": 40
+    },
+    {
+      "question": "Why does the entropy of an isolated system never decrease, even though microscopic laws are reversible?",
+      "answer": "Because systems overwhelmingly evolve toward more probable (higher-multiplicity) states.",
+      "marks": 40
+    },
+    {
+      "question": "In quantum field theory, particles are viewed as excitations of underlying fields. What describes these excitations mathematically?",
+      "answer": "Field quanta",
+      "marks": 40
+    },
+    {
+      "question": "When identical particles are exchanged, the wavefunction may remain same or change sign. What property determines this behavior?",
+      "answer": "Particle statistics",
+      "marks": 40
+    },
+    {
+      "question": "Why do fermions resist occupying the same quantum state, leading to degeneracy pressure in stars?",
+      "answer": "Exclusion principle",
+      "marks": 40
+    },
+    {
+      "question": "A rotating frame introduces fictitious forces like Coriolis and centrifugal forces. What is the origin of these forces?",
+      "answer": "Non inertial frame",
+      "marks": 40
+    },
+    {
+      "question": "Why does light bend around massive objects even though it has no mass?",
+      "answer": "Spacetime curvature",
+      "marks": 40
+    },
+    {
+      "question": "In lasers, photons stimulate emission of identical photons, leading to coherent light amplification. What is this process called?",
+      "answer": "Stimulated emission",
+      "marks": 40
+    },
+    {
+      "question": "Why does phase difference between waves determine constructive or destructive interference patterns?",
+      "answer": "Wave superposition",
+      "marks": 40
+    },
+    {
+      "question": "In chaotic systems, small changes in initial conditions lead to drastically different outcomes. What phenomenon describes this sensitivity?",
+      "answer": "Chaos theory",
+      "marks": 40
+    },
+        {
+          "question": "In advanced microscopes, electrons are fired toward a metal surface and a measurable current is detected even when the electrons do not have enough classical energy to cross the gap. This surprising observation is best explained by which phenomenon? (A) Photoelectric effect (B) Quantum tunneling (C) Diffraction (D) Interference",
+          "answer": "Quantum tunneling",
+          "marks": 40
+        },
+        {
+          "question": "Two particles are created together and then separated by a large distance. Measuring one instantly determines the state of the other, regardless of separation. This strange correlation arises due to which concept? (A) Superposition (B) Decoherence (C) Entanglement (D) Refraction",
+          "answer": "Quantum entanglement",
+          "marks": 40
+        },
+        {
+          "question": "While trying to precisely measure the exact position of an electron using high-energy photons, its momentum becomes highly uncertain. This limitation is fundamentally due to which principle? (A) Pauli exclusion (B) Uncertainty principle (C) Relativity (D) Conservation laws",
+          "answer": "Uncertainty principle",
+          "marks": 40
+        },
+        {
+          "question": "In a double-slit experiment, when detectors are placed to observe which slit a particle passes through, the interference pattern disappears. This change occurs due to which underlying reason? (A) Energy loss (B) Wavefunction collapse (C) Diffraction limit (D) Polarization",
+          "answer": "Wavefunction collapse",
+          "marks": 40
+        },
+        {
+          "question": "An electron confined within an extremely small region, such as inside a nucleus, tends to escape because confining it increases its kinetic energy drastically. This behavior is explained by which concept? (A) Potential energy drop (B) High kinetic energy (C) Magnetic force (D) Electric shielding",
+          "answer": "High kinetic energy",
+          "marks": 40
+        },
+        {
+          "question": "A heat engine operating between two temperatures can never convert all absorbed heat into work, no matter how ideal the design. This fundamental limitation arises due to which law? (A) Zeroth law (B) First law (C) Second law (D) Third law",
+          "answer": "Second law",
+          "marks": 40
+        },
+        {
+          "question": "Light of low intensity but high frequency ejects electrons from a metal surface, while high intensity low-frequency light fails to do so. This observation is explained by which phenomenon? (A) Reflection (B) Photoelectric effect (C) Refraction (D) Scattering",
+          "answer": "Photoelectric effect",
+          "marks": 40
+        },
+        {
+          "question": "A copper plate moving through a magnetic field experiences a force opposing its motion even without physical contact. This happens due to currents induced inside the conductor. This effect is known as? (A) Hall effect (B) Eddy currents (C) Skin effect (D) Faraday shielding",
+          "answer": "Eddy currents",
+          "marks": 40
+        },
+        {
+          "question": "When alternating current is used for long-distance transmission, energy losses are minimized because voltage can be easily increased and decreased. This advantage is primarily due to what property? (A) Constant resistance (B) Voltage transformation (C) Charge storage (D) Inductance loss",
+          "answer": "Voltage transformation",
+          "marks": 40
+        },
+        {
+          "question": "A moving object appears shorter along the direction of motion to a stationary observer. This effect becomes noticeable at speeds close to light. It is explained by which concept? (A) Time dilation (B) Length contraction (C) Doppler shift (D) Redshift",
+          "answer": "Length contraction",
+          "marks": 40
+        },
+        {
+          "question": "When a charged particle accelerates, it produces oscillating electric and magnetic fields that propagate through space. These fields together form what type of wave? (A) Sound wave (B) Mechanical wave (C) Electromagnetic wave (D) Matter wave",
+          "answer": "Electromagnetic wave",
+          "marks": 40
+        },
+        {
+          "question": "When white light passes through a prism, it splits into different colors because each color bends by a different amount due to variation in refractive index. This phenomenon is called? (A) Reflection (B) Dispersion (C) Diffraction (D) Polarization",
+          "answer": "Dispersion",
+          "marks": 40
+        },
+        {
+          "question": "A semiconductor becomes more conductive when doped with elements that create missing electrons (holes) in its structure. This type of doping is called? (A) n-type doping (B) p-type doping (C) intrinsic doping (D) ionic doping",
+          "answer": "p-type doping",
+          "marks": 40
+        },
+        {
+          "question": "At the resonant frequency of an LCR circuit, the inductive and capacitive reactances cancel each other, resulting in minimum impedance. This condition is known as? (A) Maximum resonance (B) Pure resistance (C) Zero reactance (D) Phase shift",
+          "answer": "Zero reactance",
+          "marks": 40
+        },
+        {
+          "question": "Light from distant galaxies appears shifted toward longer wavelengths due to the expansion of space itself. This observed effect is known as? (A) Blue shift (B) Doppler effect (C) Redshift (D) Interference",
+          "answer": "Redshift",
+          "marks": 40
+        },
+        {
+          "question": "A liquid surface behaves like a stretched elastic membrane because molecules at the surface experience unequal forces compared to those inside. This effect is called? (A) Viscosity (B) Surface tension (C) Buoyancy (D) Adhesion",
+          "answer": "Surface tension",
+          "marks": 40
+        },
+        {
+          "question": "An object immersed in water experiences an upward force that reduces its apparent weight. This force arises due to pressure differences and is known as? (A) Gravitational force (B) Buoyant force (C) Magnetic force (D) Normal force",
+          "answer": "Buoyant force",
+          "marks": 40
+        },
+        {
+          "question": "When work is done against friction or resistance, part of mechanical energy is converted into heat, reducing useful energy. This conversion is explained by which principle? (A) Energy conservation (B) Energy dissipation (C) Momentum conservation (D) Elasticity",
+          "answer": "Energy dissipation",
+          "marks": 40
+        },
+        {
+          "question": "When a gas is heated, its molecules move faster, increasing the average separation between them, which leads to a decrease in density. This behavior is explained by? (A) Boyle’s law (B) Thermal expansion (C) Hooke’s law (D) Ohm’s law",
+          "answer": "Thermal expansion",
+          "marks": 40
+        },
+        {
+          "question": "In nuclear reactions, a small amount of mass is converted into a large amount of energy according to a famous equation. This relationship is given by? (A) F=ma (B) V=IR (C) E=mc^2 (D) PV=nRT",
+          "answer": "E=mc^2",
+          "marks": 40
+        }
   ],
   "sciFi": [
     {
@@ -368,48 +508,101 @@
           "marks": 40
         }
       ],
-  "puzzles": [
-    {
-      "question": "I speak without a mouth and hear without ears. I have no body, but I come alive with wind. What am I?",
-      "answer": "An echo",
-      "marks": 60,
-      "hint": "Sound travels, bounces off a surface, and returns to you."
-    },
-    {
-      "question": "A man walks into a restaurant and orders albatross soup. After one sip, he goes home and kills himself. Why?",
-      "answer": "He was stranded after a shipwreck; a survivor told him he was eating 'albatross soup' but it was actually his wife. Tasting real albatross soup at the restaurant revealed the deception.",
-      "marks": 60,
-      "hint": "Lateral thinking — think about what he might have eaten before."
-    },
-    {
-      "question": "What has keys but no locks, space but no room, and you can enter but can't go inside?",
-      "answer": "A keyboard",
-      "marks": 60,
-      "hint": "You use it every day to type."
-    },
-    {
-      "question": "Using a 3-litre jug and a 5-litre jug, how do you measure exactly 4 litres of water?",
-      "answer": "Fill the 5L, pour into 3L until full (2L left in 5L). Empty 3L. Pour 2L into 3L. Refill 5L, pour into 3L until full (needs 1L). 5L now has exactly 4L.",
-      "marks": 60,
-      "hint": "You'll need to fill and empty the jugs multiple times."
-    },
-    {
-      "question": "Three switches outside a room each control one bulb inside. With only one trip into the room, how do you identify which switch controls which bulb?",
-      "answer": "Turn Switch 1 on for a few minutes, then off. Turn Switch 2 on. Enter: on = Switch 2; off but warm = Switch 1; off and cold = Switch 3.",
-      "marks": 60,
-      "hint": "A light bulb generates heat when it has been on."
-    },
-    {
-      "question": "A boat has a ladder hanging over its side. The lowest rung touches the water. The tide rises 90 cm. How many rungs are now submerged if the rungs are 30 cm apart?",
-      "answer": "Still only the bottom rung (or none). The boat rises with the tide so the ladder stays at the same position relative to the water.",
-      "marks": 60,
-      "hint": "Think about what happens to the boat when the tide rises."
-    },
-    {
-      "question": "You have 12 balls, all identical in appearance. One is either heavier or lighter. Using a balance scale with only 3 weighings, how do you find the odd ball and whether it is heavy or light?",
-      "answer": "Divide into three groups of 4. Weigh Group 1 vs Group 2. If balanced, odd ball is in Group 3 — use next 2 weighings to isolate. If unbalanced, use known-good balls to narrow down in weighings 2 and 3.",
-      "marks": 60,
-      "hint": "Divide into three equal groups for the first weighing."
-    }
-  ]
-}
+    "puzzles": [
+      {
+        "question": "A prisoner stands before two doors: one to freedom, one to death. Two guards stand there; one always lies, one always tells the truth. You don't know who is who. You can ask only one guard one question to find the door to freedom. What do you ask?",
+        "answer": "Ask: “Which door would the other guard say leads to freedom? Then choose the opposite door",
+        "marks": 60
+      },
+      {
+        "question": "There are 10 bags of gold coins. Nine bags contain 10g coins, but one bag contains 11g counterfeit coins. You have a digital scale that provides an exact weight. What is the minimum number of weighings needed to identify the counterfeit bag?",
+        "answer": "One weighing",
+        "marks": 60
+      },
+      {
+        "question": "A digital safe requires a 4-digit code. The clues are: The first is double the fourth. The second is the sum of the first and fourth. The third is the second minus five. No digits are zero. What is the code?",
+        "answer": "4612",
+        "marks": 60
+      },
+      {
+        "question": "Four people (A, B, C, D) must cross a bridge at night with one torch. Speeds are 1, 2, 5, and 10 minutes. Only two can cross at once at the slower person's pace. How do they all cross in exactly 17 minutes?",
+        "answer": "AB, A, CD, B, AB",
+        "marks": 60
+      },
+      {
+        "question": "Three boxes are labeled 'Apples', 'Oranges', and 'Apples & Oranges'. Every label is currently incorrect. You can pick only one fruit from one box to relabel all three correctly. Which box do you pick from?",
+        "answer": "Mixed box",
+        "marks": 60
+      },
+      {
+        "question": "A man is found hanging in an empty, locked room with a puddle of water under him. There is no furniture. How did he reach the ceiling to tie the rope?",
+        "answer": "Ice block",
+        "marks": 60
+      },
+      {
+        "question": "A spy watches a guard. Guard says 'Twelve', officer says 'Six' (let in). Guard says 'Six', officer says 'Three' (let in). Guard says 'Ten', spy says 'Five' and is shot. What should he have said?",
+        "answer": "Three",
+        "marks": 60
+      },
+      {
+        "question": "Outside a sealed room are three switches. One controls a bulb inside. You can flip switches as you wish but only enter once. If the bulb is off when you enter, how do you know the correct switch?",
+        "answer": "Check heat",
+        "marks": 60
+      },
+      {
+        "question": "A king has three advisors in hats (Red or Blue). At least one is Red. They see others' hats but not their own. After a long silence, one realizes his is Red. How did he know?",
+        "answer": "Their silence means neither saw two Blues → so at least one of them is Red → hence he deduces his own hat is Red",
+        "marks": 60
+      },
+      {
+        "question": "You have 1,017 chips in a dark room. Exactly 23 are black-side up. How can you split them into two piles so both have the same number of black-side up chips without seeing them?",
+        "answer": "Flip random 23 chips",
+        "marks": 60
+      },
+      {
+        "question": "100 prisoners each have a box numbered 1–100 containing a random permutation of numbers 1–100. Each prisoner may open 50 boxes. They can agree on a strategy beforehand. What is the optimal strategy to maximize survival probability?",
+        "answer": "Start at your number and follow the permutation cycle.",
+        "marks": 60
+      },
+      {
+        "question": "You have two identical ropes that each burn in exactly 60 minutes but not at a uniform rate. How do you measure exactly 45 minutes?",
+        "answer": "Both ends burn",
+        "marks": 60
+      },
+      {
+        "question": "A 3L and 5L jug are available with unlimited water. Measure exactly 4L with minimum steps.",
+        "answer": "Fill 5L , Pour into 3L → (2L left in 5L) , Empty 3L, Pour 2L into 3L , Fill 5L again , Pour into 3L (needs 1L)",
+        "marks": 60
+      },
+      {
+        "question": "You have 12 identical-looking balls, one is heavier or lighter. Using a balance scale only 3 times, how do you find the odd ball and its type?",
+        "answer": "Ternary grouping",
+        "marks": 60
+      },
+      {
+        "question": "A submarine is floating in a small, enclosed swimming pool. It ejects a heavy iron anchor into the water. Does the water level of the pool rise, fall, or stay the same?",
+        "answer": "Falls",
+        "marks": 60
+      },
+      {
+        "question": "You have hot black coffee and cold milk. You must wait five minutes before drinking. To have the coldest coffee possible after the wait, should you add milk immediately or just before drinking?",
+        "answer": "Add immediately",
+        "marks": 60
+      },
+      {
+        "question": "A fly is at the bottom of a sealed glass jar on a sensitive digital scale. The fly suddenly takes off and hovers. What happens to the weight reading at the moment of takeoff?",
+        "answer": "Momentary increase",
+        "marks": 60
+      },
+      {
+        "question": "Why are manhole covers engineered to be round rather than square in almost every major city?",
+        "answer": "If we take a sqaure manhole it may fall diagonally through the hole which is not in case of circular one",
+        "marks": 60
+      },
+      {
+        "question": "An electric train travels North at 100 mph. The wind blows West at 50 mph. In which direction does the smoke from the engine travel?",
+        "answer": "No smoke",
+        "marks": 60
+      }
+    ]
+  }
